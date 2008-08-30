@@ -1,0 +1,159 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.5.4	//
+EXIF_header	EXIF.py	/^class EXIF_header:$/;"	c
+ExifTool	exiftools.py	/^class ExifTool:$/;"	c
+IFD_Tag	EXIF.py	/^class IFD_Tag:$/;"	c
+PennAveFeeds	feeds.py	/^class PennAveFeeds:$/;"	c
+PennAveImages	images.py	/^class PennAveImages:$/;"	c
+PennAveSlides	slides.py	/^class PennAveSlides:$/;"	c
+PennAveWeb	pennave.py	/^class PennAveWeb:$/;"	c
+PennAveWeb	prepare.py	/^class PennAveWeb:$/;"	c
+Photo	dbobjects.py	/^class Photo(SQLObject):$/;"	c
+PhotoCache	pennave.py	/^class PhotoCache:$/;"	c
+PhotoCache	prepare.py	/^class PhotoCache:$/;"	c
+PhotoCacheItem	pennave.py	/^class PhotoCacheItem:$/;"	c
+PhotoCacheItem	prepare.py	/^class PhotoCacheItem:$/;"	c
+PhotoVersion	dbobjects.py	/^class PhotoVersion:$/;"	c
+Ratio	EXIF.py	/^class Ratio:$/;"	c
+SQLCache	pennave.py	/^class SQLCache:$/;"	c
+SQLCache	prepare.py	/^class SQLCache:$/;"	c
+Tag	dbobjects.py	/^class Tag(SQLObject):$/;"	c
+TagRepr	dbobjects.py	/^class TagRepr:$/;"	c
+__init__	EXIF.py	/^    def __init__(self, file, endian, offset, fake_exif, debug=0):$/;"	m	class:EXIF_header
+__init__	EXIF.py	/^    def __init__(self, num, den):$/;"	m	class:Ratio
+__init__	EXIF.py	/^    def __init__(self, printable, tag, field_type, values, field_offset,$/;"	m	class:IFD_Tag
+__init__	dbobjects.py	/^    def __init__(self, id, name, photo):$/;"	m	class:PhotoVersion
+__init__	dbobjects.py	/^    def __init__(self, id=None, name=None, categoryId=None, numPhotos=None):$/;"	m	class:TagRepr
+__init__	exiftools.py	/^    def __init__(self):$/;"	m	class:ExifTool
+__init__	feeds.py	/^    def __init__(self, root):$/;"	m	class:PennAveFeeds
+__init__	images.py	/^    def __init__(self, root):$/;"	m	class:PennAveImages
+__init__	pennave.py	/^    def __init__(self):$/;"	m	class:PennAveWeb
+__init__	pennave.py	/^    def __init__(self):$/;"	m	class:PhotoCache
+__init__	pennave.py	/^    def __init__(self):$/;"	m	class:SQLCache
+__init__	pennave.py	/^    def __init__(self, photo):$/;"	m	class:PhotoCacheItem
+__init__	prepare.py	/^    def __init__(self):$/;"	m	class:PennAveWeb
+__init__	prepare.py	/^    def __init__(self):$/;"	m	class:PhotoCache
+__init__	prepare.py	/^    def __init__(self):$/;"	m	class:SQLCache
+__init__	prepare.py	/^    def __init__(self, photo):$/;"	m	class:PhotoCacheItem
+__init__	slides.py	/^    def __init__(self, root):$/;"	m	class:PennAveSlides
+__repr__	EXIF.py	/^    def __repr__(self):$/;"	m	class:IFD_Tag	file:
+__repr__	EXIF.py	/^    def __repr__(self):$/;"	m	class:Ratio	file:
+__str__	EXIF.py	/^    def __str__(self):$/;"	m	class:IFD_Tag	file:
+addRequiredTags	pennave.py	/^    def addRequiredTags(self, tags):$/;"	m	class:PennAveWeb
+addRequiredTags	prepare.py	/^    def addRequiredTags(self, tags):$/;"	m	class:PennAveWeb
+block	feeds.py	/^    def block(self, *args, **kwargs):$/;"	m	class:PennAveFeeds
+buildChildTags	pennave.py	/^    def buildChildTags(self):$/;"	m	class:PennAveWeb
+buildChildTags	prepare.py	/^    def buildChildTags(self):$/;"	m	class:PennAveWeb
+buildStaticWelcome	pennave.py	/^    def buildStaticWelcome(self):$/;"	m	class:PennAveWeb
+buildStaticWelcome	prepare.py	/^    def buildStaticWelcome(self):$/;"	m	class:PennAveWeb
+canon_decode_tag	EXIF.py	/^    def canon_decode_tag(self, value, dict):$/;"	m	class:EXIF_header
+checkStaticWelcome	pennave.py	/^    def checkStaticWelcome(self):$/;"	m	class:PennAveWeb
+checkStaticWelcome	prepare.py	/^    def checkStaticWelcome(self):$/;"	m	class:PennAveWeb
+connect	dbobjects.py	/^def connect(uri, debug=False, cache=None, process=True):$/;"	f
+connectWrapper	pennave.py	/^def connectWrapper(threadIndex):$/;"	f
+connectWrapper	prepare.py	/^def connectWrapper(threadIndex):$/;"	f
+createAccessDenied	images.py	/^    def createAccessDenied(self, p, size):$/;"	m	class:PennAveImages
+createErrorMessagePng	images.py	/^    def createErrorMessagePng(self, size, message):$/;"	m	class:PennAveImages
+createErrorPng	images.py	/^    def createErrorPng(self, p, size, version=None):$/;"	m	class:PennAveImages
+decode_maker_note	EXIF.py	/^    def decode_maker_note(self):$/;"	m	class:EXIF_header
+dump_IFD	EXIF.py	/^    def dump_IFD(self, ifd, ifd_name, dict=EXIF_TAGS, relative=0):$/;"	m	class:EXIF_header
+execute	pennave.py	/^    def execute(self, query, forceUpdate=False):$/;"	m	class:SQLCache
+execute	prepare.py	/^    def execute(self, query, forceUpdate=False):$/;"	m	class:SQLCache
+expire_all	dbobjects.py	/^def expire_all():$/;"	f
+extract_TIFF_thumbnail	EXIF.py	/^    def extract_TIFF_thumbnail(self, thumb_ifd):$/;"	m	class:EXIF_header
+first_IFD	EXIF.py	/^    def first_IFD(self):$/;"	m	class:EXIF_header
+flush	pennave.py	/^    def flush(self):$/;"	m	class:SQLCache
+flush	prepare.py	/^    def flush(self):$/;"	m	class:SQLCache
+gcd	EXIF.py	/^def gcd(a, b):$/;"	f
+generateTableRef	pennave.py	/^    def generateTableRef(self, count):$/;"	m	class:PennAveWeb
+generateTableRef	prepare.py	/^    def generateTableRef(self, count):$/;"	m	class:PennAveWeb
+generateTableRef	prepare.py	/^def generateTableRef(count):$/;"	f
+get	exiftools.py	/^    def get(self, filename):$/;"	m	class:ExifTool
+get	pennave.py	/^    def get(self, photo):$/;"	m	class:PhotoCache
+get	prepare.py	/^    def get(self, photo):$/;"	m	class:PhotoCache
+getAllPhotos	prepare.py	/^def getAllPhotos():$/;"	f
+getExifTags	pennave.py	/^    def getExifTags(self, filename):$/;"	m	class:PennAveWeb
+getExifTags	prepare.py	/^    def getExifTags(self, filename):$/;"	m	class:PennAveWeb
+getFilename	dbobjects.py	/^    def getFilename(self):$/;"	m	class:PhotoVersion
+getFilename	dbobjects.py	/^    def getFilename(self, forceOriginal=False, version=None, cache=None):$/;"	f
+getFilename	pennave.py	/^    def getFilename(self, p, version=None):$/;"	m	class:PennAveWeb
+getFilename	pennave.py	/^def getFilename(p, version=None, cache=None):$/;"	f
+getFilename	prepare.py	/^    def getFilename(self, p, version=None):$/;"	m	class:PennAveWeb
+getFilename	prepare.py	/^def getFilename(p, version=None, cache=None):$/;"	f
+getImageId	images.py	/^    def getImageId(self, arg):$/;"	m	class:PennAveImages
+getNextPhoto	slides.py	/^    def getNextPhoto(self, *args, **kwargs):$/;"	m	class:PennAveSlides
+getPhotos	pennave.py	/^    def getPhotos(self, tags, orTags=None, orderBy=None, extraFields=None):$/;"	m	class:PennAveWeb
+getPhotos	prepare.py	/^    def getPhotos(self, tags, orTags=None, orderBy=None, extraFields=None):$/;"	m	class:PennAveWeb
+getPrefix	pennave.py	/^    def getPrefix(self):$/;"	m	class:PennAveWeb
+getPrefix	prepare.py	/^    def getPrefix(self):$/;"	m	class:PennAveWeb
+getRandomPhotos	pennave.py	/^    def getRandomPhotos(self, *args, **kwargs):$/;"	m	class:PennAveWeb
+getRandomPhotos	prepare.py	/^    def getRandomPhotos(self, *args, **kwargs):$/;"	m	class:PennAveWeb
+getTags	pennave.py	/^    def getTags(self, tags, orTags=None, parents=None):$/;"	m	class:PennAveWeb
+getTags	prepare.py	/^    def getTags(self, tags, orTags=None, parents=None):$/;"	m	class:PennAveWeb
+getThumbnail	images.py	/^    def getThumbnail(self, p, size, indir, version=None):$/;"	m	class:PennAveImages
+getThumbnailFallback	images.py	/^    def getThumbnailFallback(self, ext, ctypes, p, size):$/;"	m	class:PennAveImages
+getVersion	pennave.py	/^    def getVersion(self):$/;"	m	class:PennAveWeb
+getVersion	prepare.py	/^    def getVersion(self):$/;"	m	class:PennAveWeb
+getVersionFromURL	images.py	/^    def getVersionFromURL(self, args):$/;"	m	class:PennAveImages
+getVersions	dbobjects.py	/^    def getVersions(self, cache=None):$/;"	f
+index	images.py	/^    def index(self):$/;"	m	class:PennAveImages
+index	pennave.py	/^    def index(self):$/;"	m	class:PennAveWeb
+index	prepare.py	/^    def index(self):$/;"	m	class:PennAveWeb
+index	slides.py	/^    def index(self, *args, **kwargs):$/;"	m	class:PennAveSlides
+list_IFDs	EXIF.py	/^    def list_IFDs(self):$/;"	m	class:EXIF_header
+medium	images.py	/^    def medium(self, *args, **kwargs):$/;"	m	class:PennAveImages
+mphandler	mppennave.py	/^def mphandler(req):$/;"	f
+n2s	EXIF.py	/^    def n2s(self, offset, length):$/;"	m	class:EXIF_header
+newDoc	pennave.py	/^    def newDoc(self, rootTag):$/;"	m	class:PennAveWeb
+newDoc	prepare.py	/^    def newDoc(self, rootTag):$/;"	m	class:PennAveWeb
+next_IFD	EXIF.py	/^    def next_IFD(self, ifd):$/;"	m	class:EXIF_header
+olympus_special_mode	EXIF.py	/^def olympus_special_mode(v):$/;"	f
+original	images.py	/^    def original(self, *args, **kwargs):$/;"	m	class:PennAveImages
+original_aws	images.py	/^    def original_aws(self, *args, **kwargs):$/;"	m	class:PennAveImages
+outputDoc	pennave.py	/^    def outputDoc(self, doc, prefix=True, transform=None):$/;"	m	class:PennAveWeb
+outputDoc	prepare.py	/^    def outputDoc(self, doc, prefix=True, transform=None):$/;"	m	class:PennAveWeb
+photoToXml	pennave.py	/^    def photoToXml(self, p, parent, tags=True, exif=True, versions=True, currentVersion=1, ns={}):$/;"	m	class:PennAveWeb
+photoToXml	prepare.py	/^    def photoToXml(self, p, parent, tags=True, exif=True, versions=True, currentVersion=1, ns={}):$/;"	m	class:PennAveWeb
+processHookArgs	pennave.py	/^    def processHookArgs(self, root, args, ns):$/;"	m	class:PennAveWeb
+processHookArgs	prepare.py	/^    def processHookArgs(self, root, args, ns):$/;"	m	class:PennAveWeb
+processTags	pennave.py	/^    def processTags(self, args):$/;"	m	class:PennAveWeb
+processTags	prepare.py	/^    def processTags(self, args):$/;"	m	class:PennAveWeb
+process_file	EXIF.py	/^def process_file(file, debug=0):$/;"	f
+reduce	EXIF.py	/^    def reduce(self):$/;"	m	class:Ratio
+rss	feeds.py	/^    def rss(self, *args, **kwargs):$/;"	m	class:PennAveFeeds
+s2n	EXIF.py	/^    def s2n(self, offset, length, signed=0, reverse=False):$/;"	m	class:EXIF_header
+s2n_intel	EXIF.py	/^def s2n_intel(str):$/;"	f
+s2n_motorola	EXIF.py	/^def s2n_motorola(str):$/;"	f
+serializeTag	pennave.py	/^    def serializeTag(self, tag, parent):$/;"	m	class:PennAveWeb
+serializeTag	prepare.py	/^    def serializeTag(self, tag, parent):$/;"	m	class:PennAveWeb
+setConnection	dbobjects.py	/^def setConnection(conn):$/;"	f
+setLastModified	pennave.py	/^    def setLastModified(self, mtime=time.time()):$/;"	m	class:PennAveWeb
+setLastModified	prepare.py	/^    def setLastModified(self, mtime=time.time()):$/;"	m	class:PennAveWeb
+setOrder	pennave.py	/^    def setOrder(self, order=None, returnPage=None):$/;"	m	class:PennAveWeb
+setOrder	prepare.py	/^    def setOrder(self, order=None, returnPage=None):$/;"	m	class:PennAveWeb
+sqlmeta	dbobjects.py	/^    class sqlmeta:$/;"	c
+stackImages	imageops.py	/^def stackImages(fns, of, numImages, size=(160,160), shadow=False, shadowIterations=3):$/;"	f
+stacked	images.py	/^    def stacked(self, *args, **kwargs):$/;"	m	class:PennAveImages
+start	pennave.py	/^def start(config=None, dburi=None, dbdebug=False, mod_python=False):$/;"	f
+start	prepare.py	/^def start(config=None, dburi=None, dbdebug=False):$/;"	f
+start_modpython	pennave.py	/^def start_modpython():$/;"	f
+tagToXml	pennave.py	/^    def tagToXml(self, t, parent):$/;"	m	class:PennAveWeb
+tagToXml	prepare.py	/^    def tagToXml(self, t, parent):$/;"	m	class:PennAveWeb
+tags	pennave.py	/^    def tags(self, *args, **kwargs):$/;"	m	class:PennAveWeb
+tags	prepare.py	/^    def tags(self, *args, **kwargs):$/;"	m	class:PennAveWeb
+thumbnail	images.py	/^    def thumbnail(self, *args, **kwargs):$/;"	m	class:PennAveImages
+timeline	pennave.py	/^    def timeline(self, *args, **kwargs):$/;"	m	class:PennAveWeb
+timeline	prepare.py	/^    def timeline(self, *args, **kwargs):$/;"	m	class:PennAveWeb
+tiny	images.py	/^    def tiny(self, *args, **kwargs):$/;"	m	class:PennAveImages
+toTagRepr	dbobjects.py	/^    def toTagRepr(self):$/;"	f
+translate	imageops.py	/^def translate((x,y), angle):$/;"	f
+validateAccess	pennave.py	/^    def validateAccess(self, photo):$/;"	m	class:PennAveWeb
+validateAccess	prepare.py	/^    def validateAccess(self, photo):$/;"	m	class:PennAveWeb
+validateSince	pennave.py	/^    def validateSince(self):$/;"	m	class:PennAveWeb
+validateSince	prepare.py	/^    def validateSince(self):$/;"	m	class:PennAveWeb
+view	pennave.py	/^    def view(self, *args):$/;"	m	class:PennAveWeb
+view	prepare.py	/^    def view(self, *args):$/;"	m	class:PennAveWeb
