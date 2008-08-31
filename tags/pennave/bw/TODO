@@ -1,0 +1,22 @@
+Things to Do on PennAve
+
+Patrick Wagstrom
+pridkett@users.sourceforge.net
+
+* fix the javascript mouseovers of pictures so they actually follow the cursor
+* figure out how to do mouseovers in IE properly
+* better graphics integration
+  in particular, I'm talking about moving back and forth when viewing a set of tags
+* allow browsing by date
+* maybe some online help would be nice
+* comment source code
+* control panel for slide show
+* optimize slide show for more efficient fading (canvas?)
+* clustering of hierarchical tags.  For example "events" should be bigger than
+  any of the tags underneath it -- even though right now it doesn't even show
+  up.
+* drill down interface for tags
+* regular expressions to rewrite the file locations
+* better options for xsltRender - platforms should be rendered by default even
+  if xsltRender is true.  Only working platforms such as IE 7 and FireFox
+  should have the option to get the XML.
