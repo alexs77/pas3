@@ -1,0 +1,27 @@
+div#logging_window > span { display: block; border: 1px solid black; -moz-border-radius: 8px; padding: 1px; padding-left: 2px; padding-right: 2px; margin-bottom: 1px; font-family: arial, helvetica; font-weight: bold; font-size: 75%;}
+
+div#logging_window { display: none; }
+
+span.log0 {
+    background-color: #99ff99; border-color: #009900 !important;
+}
+
+span.log10 {
+    background-color: #99ccff; border-color: #0000cc !important;
+}
+
+span.log20 {
+    background-color: #ff99cc; border-color: #ff3399 !important;
+}
+
+span.log30 {
+    background-color: #ffff99; border-color: #ffff00 !important;
+}
+
+span.log40 {
+    background-color: #ffd0a0; border-color: #ff9933 !important;
+}
+
+span.log50 {
+    background-color: #ffbbbb; border-color: red !important;
+}
