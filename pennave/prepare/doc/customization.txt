@@ -1,0 +1,84 @@
+Customizing the welcome.html File
+
+Like any good hacker, I've come up with my own little syntax for this
+file, so you'll need to bear with me.  In the most basic sense, it can
+be a normal HTML file with a few additional tags that I've added to
+it.  Unlike the rest of the PennAve, this file is not translated using
+an XSLT engine, so you don't need to worry about making 100% certain
+it's valid XHTML.  This was done mainly to be able to add in
+javascript on these pages.
+
+Please note: this formatting document only applies to the initial
+welcome page when you visit a gallery.  To change the design of the
+main gallery and photo views, you'll need to modify
+pennave/static/xslt/pennave.xsl.
+
+WARNING: because this engine is VERY fragile, the entirely of a paLink
+and paImg command MUST be on the same line.  If they're not, you'll
+get some very unpredictable results.
+
+******
+paLink
+******
+creates a link to something in PennAve.  Takes one mandatory
+property and one optional property.
+
+mandatory property:
+type: the type of link, acceptable value is "browse"
+optional property:
+categories: a comma separated list of category names.  If you want it
+to include all subcategories, place a '+' at the end of the game.
+
+This element gets translated into an <a href="...">...</a> setup.  Any
+child elements are properly copied over and any additional elements
+you wish to include are copied too.  Thus if you wanted to a do a
+simple link to the main browse page for your catalog you could do:
+
+<paLink type="browse">Browse all my photos</paLink>
+
+If we wanted to get fancy and link to all my favorites with people in
+them and have the link with a green background, we could do something
+like this:
+<paLink type="browse" categories="Favorites,People+"
+style="background-color: green;">Favorite Photos of People</paLink>
+
+Hopefully you get the idea.
+
+*****
+paImg
+*****
+
+Very similar to paLink above, but inserts a reference to an image.
+Also takes two properties, but the properties depend on the type
+parameter.
+
+mandatory property:
+type: the type of image, either "stacked" or "thumbnail".  If type is
+"stacked" then requires tag "categories".  If type is "thumbnail" then
+requires tag "idNum"
+optional properties:
+categories: the names of the categories to create a stacked graphic
+from.  The syntax is the same as the syntax for paLink.
+idNum: the numeric ID number of the photo you wish to thumbnail.
+
+For example, the following will create an image reference to photo 32
+in your database:
+<paImg type="thumbnail" idNum="32"/>
+You can figure out what the id number of a photo is by mousing over it
+and looking at what the little red box says.
+
+If you'd like to create a nice little stacked photo icon, great for
+browsing sets, you can do something like this:
+<paImg type="stacked" categories="Favorites,Events+"/>
+
+As before, any properties not parsed are copied over as are all child
+elements.  Pretty slick like that.
+
+**********
+::PREFIX::
+**********
+
+A special string that is used for automatically generating full URL
+links.  For example if your installation of PennAve is running at
+http://yourwebsite.com/pennave/ then a link that says <a
+href="::PREFIX::tags/"> will link to http://yourwebsite.com/pennave/tags/
