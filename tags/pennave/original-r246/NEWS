@@ -1,0 +1,34 @@
+Major Changes to PennAve:
+
+Version 0.5 (forthcoming):
+ * support for multiple versions of the same file
+ * support for localized versions of PennAve.
+  
+Version 0.4 (May 23, 2007):
+ * Lost-Modified is sent on images allowing them to be cached
+ * On systems that support the canvas tag, we do some nice canvas drawing for
+   the stacked images on the main page.
+ * all XML is now placed in a namespace
+   This means that there are changes required for any customized XSLT that
+   you may use on your site.  In particular, the top level elements are
+   now pa:tagBrowse and pa:photoView.
+ * Lots of fixes for UTF-8, hopefully we got them all
+ * A brand spanking new user interface that doesn't suck nearly as much as
+   the previous one.
+ * Ability to do server side translation of XSLT files by setting
+   xsltRender=True in the global section of the configuration file.
+ * Ability to show the default version of an image instead of the original
+   version by setting defaultImage=True in the configuration file.
+ * Upgraded to CherryPy 3.0
+ * Almost all navigation now possible without JavaScript
+ * Lots of small bug fixes.
+
+Version 0.3:
+ * slideshow, with fancy fading effects
+ * rss feeds when browsing sets of tags
+ * ability to list all tags under a topic (not entirely revealed
+ through UI)
+ * customizable start page for PennAve - useful so you don't overwhelm
+ Grandma when she browses your photos.
+ * improved speed thanks to SQL caching
+ * cool little stacked photo effect, useful for welcome page
