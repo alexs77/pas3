@@ -1,0 +1,269 @@
+PennAve Installation Notes
+
+Required Software Packages:
+Python 2.3 or Greater
+CherryPy 3.0 or Greater
+Python Imaging Library (around 1.1.x should be fine)
+SQLObject 0.8 dev or Greater
+
+How to Install PennAve:
+
+First, make sure that you have all of the dependencies installed and
+accessible.  The scope of that installation process is beyond this
+document.  A warning for Ubuntu Dapper users, the versions of CherryPy
+and SQLObject that ship with Ubuntu Feisty (7.04) are NOT sufficient for the
+execution of PennAve, you'll need to upgrade.  The easiest way to
+accomplish this upgrade is to use EasyInstall.  You can find EasyInstall
+at: http://peak.telecommunity.com/DevCenter/EasyInstall
+After installing EasyInstall, run the following command as root:
+easy_install SQLObject==dev
+That should take care of getting the required libraries up to date.
+
+Next put a copy of your photos on your web server.  If you're just testing
+your setup from a desktop machine, then this step isn't necessary.  In my
+situation, I use rsync to keep the copies of my photos in sync between my
+desktop machine and web server.  It also makes a nice method to keep a
+backup of all my files.
+
+Finally, before getting started, you'll need to copy your f-spot photo
+database over to the machine where you'll be running the script.  By
+default this should be in ~/.gnome2/f-spot.
+
+Now that you've got everything installed, you can begin to edit the
+configuration for pennave.  Copy src/default.conf to src/my.conf.
+At the top are the options you'll most likely need to configure.
+
+Configuration Options
+*********************
+
+tools.staticdir.root: points to the directory called "static" in the
+PennAve installation.  This directory does not need to be directly
+accessible from the web server, CherryPy will take care of that.  For
+example, if you extracted PennAve to /home/user/www/pennave, this
+should be set to "/home/user/www/pennave/static".
+
+scaledPath: directory that must be writable by the user running the
+PennAve daemon.  This directory should have a paths called "medium" and
+"thumbs" underneath it.  This is where all the automatically generated
+thumbnails and scaled images reside.
+
+requiredTags: a python list of tags that are required of all photos in
+the gallery.  In my copy of F-Spot I created a tag called "Public"
+that I tag all photos I wish to be public with.  If a photo is lacking
+this tag it will not be viewable from the gallery.  By default F-Spot
+does not create a tag called "Public", so you'll need to do thta
+yourself.
+
+hiddenTags: a python list of tags that will not be displayed in the
+interface.  Photos tagged with these tags may still be viewable,
+however, the tag itself will be ignored and never displayed.  This is
+perfect if you have certain tags that you don't want people to know
+about.  Note: this setting will not prevent photos from being shown --
+any photo that has all of the required tags will still be visible.
+
+feedTitle: a string that is the title of the RSS feeds that PennAve
+provides.
+
+feedDescription: a string tat is the description subtext of the RSS
+feeds that PennAve provides.
+
+filenameRewrite: This allows you to perform a global substituion on
+filenames.  On my desktop machine all of my photos are stored in
+/media/usbdisk/photos, while on my server they are stored in
+/mnt/media/patrick.  The example setting shows how to rewrite one to
+another.  Right now this is a VERY simple method and only allows one
+rewrite.  In the future this will probably a list of tuples complete
+with regular expression fun.  If you mirror the exact path structure
+of your F-Spot machine, this setting can remain commented out.
+
+welcomeHtml: a filename in pennave/static/html that is used for
+generating the static welcome page.  If this option is blank or unset,
+then no static welcome page will be created and instead a redirect
+will direct the user to the default tag browse screen.
+
+regenKey: a special string that can be appended to the hook of any
+image URL to force that image to be rescaled.  For example, with the
+default of xxregenxx, you can append "?xxregenxx=1" to the URL of any
+image and force PennAve to rescale the image.
+
+photosPerPage: changes the numbers of photos shown on the page in the
+default browsing view.  It's safe to change this, but it seems like 24
+works pretty nicely.
+
+defaultImage: either True or False.  If True, PennAve will show the
+"default" image from F-Spot, meaning the image that comes up when you
+look at the image in F-Spot.  If False, PennAve will show the original
+image.
+
+dbLocation: by default PennAve looks in the ~/.gnome2/f-spot/photos.db
+for a copy of the sqlite database.  Changing this value allows you to
+put the database in a different location with a different filename.
+
+xsltRender: either True or False, controls whether or not XSLT
+transformations are done on the client or server side.  Server side
+means greater compatibility, but also comes at a bandwidth and
+processing cost.  On my setup, rendering the HTML on the server side
+results in 96k of data transmission for every request to a tag browse
+page.  Rendering the HTML on the client side requires a single request
+to an 18k XSLT stylesheet and then 48k of data transmission for
+every request to a tag browse page.  A savings of 50%!  Not to mention
+the processor time you're saving on your server.  However, right now
+this will render the HTML for ALL clients, meaning spiders will get
+confused.
+
+mediumPhotoSize: a tuple containing the maximum size for a medium
+photos.  Changing this may break your theme.
+
+thumbnailPhotoSize: a tuple containing the maximum size for a
+thumbnail.  Changing this may break your theme.
+
+tinyPhotoSize: a tuple containing the maximum size for a tiny photo,
+changing this may break your photo.
+
+numRandomPhotos: an integer indicating the number of random photos to
+include when generating the random scattered images on the default
+welcome pages for PennAve.
+
+font: the pathname of the font that you'll use for writing messages
+on images.  The LiberationSans font is included in the distribution
+so you don't need to find another font.
+
+server.environment: cherrypy setting, do not change
+
+tools.sessions.on: cherrypy setting, do not change
+
+tools.sessions.storageType: cherrypy setting, do not change
+
+tools.sessions.cookieName: cherrypy setting, do not change
+
+server.thread_pool: controls the number of concurrent threads for the
+CherryPy server of PennAve.  You can up this setting as needed.  8
+should generally be fine.
+
+server.socket_port: the port that the CherryPy server for PennAve will
+run on.
+
+
+Running PennAve
+***************
+
+After all of this, you should be able to fire up PennAve and get it running
+pretty easily.  Change into your source directory and run:
+python pennave.py --conf my.conf
+
+The output should appear to be something like:
+
+setting connection on  <class 'dbobjects.Tag'>
+setting connection on  <class 'dbobjects.Photo'>
+[22/May/2007:23:51:02] HTTP Serving HTTP on http://0.0.0.0:8000/
+DEBUG:cherrypy.error:[22/May/2007:23:51:02] HTTP Serving HTTP on http://0.0.0.0:8000/
+
+You should now have PennAve up and running and ready to start browing your
+photos PennAve style.  Just point your browser to the
+http://localhost:8000/ and you should have your photo gallery
+viewable.  Of course, if you changed the port, you'll need to adjust
+the URL accordingly.
+
+
+Frequently Asked Questions
+**************************
+
+** How can I run PennAve behind Apache?
+
+There are three different methods that you can PennAve behind Apache.  The
+preferred method is to use mod_rewrite and mod_proxy.  In that case, just
+put the following lines in your apache.conf and your gallery will appear
+at http://yourserver/gallery/:
+
+        # Proxy the requests for pennave
+        RequestHeader set CP-Location /gallery
+        RewriteRule ^/gallery(.*) http://localhost:8000$1 [P]
+
+The second method utilizes a persistent proxy connection.  In theory this can
+be much faster, but if PennAve shuts down, Apache won't try to reopen the
+proxy connection and you'll end up needing to restart Apache.  This method does
+not require the use of mod_rewrite, so it's one less module needed in your
+webserver.  To use mod_proxy with a static tunnel use the following lines:
+
+    <Location /gallery/>
+        ProxyPass http://127.0.0.1:8000/
+        ProxyPassReverse http://127.0.0.1:8000/
+        RequestHeader set CP-Location /gallery
+    </Location>
+
+Finally, with the upgrade to CherryPy 3.0, it is possible to run PennAve using
+mod_python.  This is great beacuse it means that you don't need to run a separate
+process.  It's not so great because while CherryPy is a threaded web server, Apache
+typically forks, which means that data won't be shared between sessions and you'll
+end up replicating your cache multiple times.  With this method, however, you don't
+need to start PennAve on the command line.  You'll also need to specify the database
+location using the dblocation setting in your configuration file and make sure that
+your web server process has permissions to write to the scaled image directory.
+In the example below, you'll need to change the local pathnames to reflect your system:
+
+    <Location "/gallery">
+        PythonPath "sys.path+['/home/patrick/pennave/src']"
+        SetHandler python-program
+        PythonHandler mppennave::mphandler
+        PythonOption cherrypy.setup pennave::start_modpython
+        PythonOption pennave.config_file "/home/patrick/pennave/src/donkey.conf"
+        PythonOption pennave.prefix "/gallery"
+        PythonOption pennave.server "http://patrick.wagstrom.net/"
+        PythonDebug On
+    </Location>
+
+While it may seem like that the best way to run PennAve is using mod_python under
+Apache, this method is still experimental and has numerous drawbacks.  In particular,
+after an idle period, the CherryPy engines shut down and the database connections
+will need to be reopened.  Also, don't underestimate the performance hit (and memory
+loss) you'll take from having multiple caches of photo information and SQL queries.
+I still highly endorse the first model for running PennAve.
+
+** What if I don't want to keep my database in ~/.gnome/f-spot?
+
+You can specify an alternate location for a database with the --dburi or -u
+options to pennave.py.  For example, if you kept the database in
+/home/www/photos.db the option would be:
+  --dburi sqlite:///home/www/photos.db
+
+In addition, the new dblocation configuration option allows one the
+change this.
+
+** How do I customize the welcome page?
+
+The default location for the welcome page is
+pennave/static/html/welcome.html.  It's a really basic file, so if
+someone wants to give it some loving, that would be appreciated.
+Information on how to customize the file can be found in
+doc/customization.txt.
+
+For an example of a bit more extensive of a file, see
+pennave/static/html/patrick.html.  That's my personal welcome page
+that takes advantage of the nifty features of the welcome page engine.
+
+** I'm getting weird ProgrammingErrors when I run Pennave.  What do I do?
+
+If you see an error like this:
+
+ProgrammingError: SQLite objects created in a thread can only be used in
+that same thread.The object was created in thread id -1221518448 and this
+is thread id -1297642608
+
+Then you need to upgrade your version of SQLObject beyond the standard
+0.7 release series.  Like I said, SQLObject 0.7 is NOT sufficient for
+PennAve.
+
+** I get errors when reading in the database file.  What do I do?
+
+SQLite broke version compatibility between version 2 and version 3.
+Unfortunately, version 2 libraries won't read version 3, nor will
+version 3 read version 2 -- you'll just get an error.  This is most
+likely a result of Python-sqlite not using the same version of the
+SQLite as your database.  The best solution is to ensure that you're
+using an SQLite v3 database and SQLite v3 libraries.
+
+On most distributions, you can tell the version of SQLite installed
+by running the command "sqlite --version".  The nmake sure that your
+version of sqlite can open ~/.gnome2/f-spot/photos.db.  If it can't
+then try sqlite3, as you probably have version 3 libraries.  F-spot
+can use both v3 and v2.
