@@ -1,3 +1,13 @@
+#===============================================================================
+# vim: set fileencoding=utf-8
+# 
+# $LastChangedDate$
+# $LastChangedRevision$
+# $LastChangedBy$
+# $HeadURL$
+# $Id$
+#===============================================================================
+
 # support.py
 #
 # this module contains general support scripts that help create a test

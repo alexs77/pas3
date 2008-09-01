@@ -1,3 +1,13 @@
+#===============================================================================
+# vim: set fileencoding=utf-8
+# 
+# $LastChangedDate$
+# $LastChangedRevision$
+# $LastChangedBy$
+# $HeadURL$
+# $Id$
+#===============================================================================
+
 import Image
 import ImageDraw
 import ImageFilter

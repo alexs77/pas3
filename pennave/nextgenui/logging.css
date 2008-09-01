@@ -1,3 +1,11 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
 div#logging_window > span { display: block; border: 1px solid black; -moz-border-radius: 8px; padding: 1px; padding-left: 2px; padding-right: 2px; margin-bottom: 1px; font-family: arial, helvetica; font-weight: bold; font-size: 75%;}
 
 div#logging_window { display: none; }

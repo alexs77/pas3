@@ -1,4 +1,12 @@
 /*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
+/*
  * canvas.js
  * Copyright (c) 2006-2007 Patrick Wagstrom <pwagstro@andrew.cmu.edu>
  * Released under the GNU General Public License

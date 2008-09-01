@@ -1,5 +1,15 @@
 #!/bin/sh
 
+#===============================================================================
+# vim: set fileencoding=utf-8
+# 
+# $LastChangedDate$
+# $LastChangedRevision$
+# $LastChangedBy$
+# $HeadURL$
+# $Id$
+#===============================================================================
+
 #
 # this script is used for packaging up PennAve.  One of these days I'll get
 # around to writing some sort of real python disttools based thing

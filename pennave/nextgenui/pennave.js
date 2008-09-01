@@ -1,3 +1,11 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
 var photoThumbnailHeight = 150;
 var photoThumbnailWidth = 200;
 var spinnerHeight = 16;
