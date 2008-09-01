@@ -13,11 +13,17 @@ import ImageFont
 import ImageDraw
 import ImageOps
 import StringIO
+import cStringIO
 import cherrypy
 import os
 import imageops
 import random
 import md5
+import urllib
+import codecs
+import logging
+import pprint
+import time
 
 from dbobjects import *
 
@@ -40,6 +46,9 @@ class PennAveImages:
         self.mediumPhotoSize = cherrypy.config.get("mediumPhotoSize",(640,480))
         self.thumbnailPhotoSize = cherrypy.config.get("thumbnailPhotoSize",(200,150))
         self.tinyPhotoSize = cherrypy.config.get("tinyPhotoSize",(32,32))
+        self.s3bucket = cherrypy.config.get("aws_s3_bucket","n/a")
+        self.s3path = cherrypy.config.get("aws_s3_path","n/a")
+        self.img_path_prefix_strip = cherrypy.config.get("img_path_prefix_strip", "n/a")
 
     @cherrypy.expose
     def index(self):
@@ -60,7 +69,7 @@ class PennAveImages:
     def createAccessDenied(self, p, size):
         return self.createErrorMessagePng(size, "access denied")
 
-    def createErrorPng(self, p, size, version=None):
+    def createErrorPng(self, p, size=(2000, 200), version=None):
         s = StringIO.StringIO()
         i = Image.new("RGB", size)
         font = ImageFont.truetype(cherrypy.config["font"], 15)
@@ -82,6 +91,14 @@ class PennAveImages:
         s.seek(0)
         cherrypy.response.headers["Content-Type"] = "image/png"
         return s.read()
+
+    def getURL(self, pictureId, versionNumber = 1, size = "original", subdomain = True):
+        pathSuffix = "%s/ID-%06d_Version-%02d_Size-%s" % ( self.s3path, pictureId, versionNumber, size)
+        s3host = "s3.amazonaws.com" ; protocol = "http"
+        if subdomain:
+            return "%s://%s.%s/%s" % (protocol, self.s3bucket, s3host, pathSuffix)
+        else:
+            return "%s://%s/%s/%s" % (protocol, s3host, self.s3bucket, pathSuffix)
 
     def getThumbnail(self, p, size, indir, version=None):
         """Attempts to create at thumnail for an image"""
