@@ -1,3 +1,11 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
 function launchSlideShow () {
     window.open(prefix + "/slides/index" + tagPrefix,"","width=640,height=480,resizable=1")
 }

@@ -1,3 +1,13 @@
+#===============================================================================
+# vim: set fileencoding=utf-8
+# 
+# $LastChangedDate$
+# $LastChangedRevision$
+# $LastChangedBy$
+# $HeadURL$
+# $Id$
+#===============================================================================
+
 import logging
 import sys
 import gc
@@ -14,8 +24,7 @@ if (sys.version_info[0] == 2 and sys.version_info[1] < 4) or sys.version_info[0]
 from sqlobject import *
 from sqlobject.sqlbuilder import *
 
-# CREATE TABLE imports ( id INTEGER PRIM ARY KEY NOT NULL, time INTEGER
-# );
+# CREATE TABLE imports ( id INTEGER PRIMARY KEY NOT NULL, time INTEGER );
 
 # CREATE TABLE meta ( id INTEGER PRIMARY KEY NOT NULL, name TEXT UNIQUE
 #                                 NOT NULL, data TEXT );

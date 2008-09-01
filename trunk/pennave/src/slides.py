@@ -1,3 +1,13 @@
+#===============================================================================
+# vim: set fileencoding=utf-8
+# 
+# $LastChangedDate$
+# $LastChangedRevision$
+# $LastChangedBy$
+# $HeadURL$
+# $Id$
+#===============================================================================
+
 import random
 from dbobjects import *
 import libxml2

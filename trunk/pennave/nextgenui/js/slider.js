@@ -1,3 +1,11 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
 // script.aculo.us slider.js v1.8.0, Tue Nov 06 15:01:40 +0300 2007
 
 // Copyright (c) 2005-2007 Marty Haught, Thomas Fuchs 

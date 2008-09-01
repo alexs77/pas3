@@ -1,3 +1,11 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
 var Logger = Class.create({
     initialize: function(divId) {
         this.log = [];

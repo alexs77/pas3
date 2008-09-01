@@ -1,4 +1,12 @@
 /*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
+/*
  * slides.js
  *
  * part of PennAve - a dynamic photo gallery application

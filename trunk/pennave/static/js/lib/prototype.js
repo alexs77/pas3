@@ -1,3 +1,11 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
 /*  Prototype JavaScript framework, version 1.6.0
  *  (c) 2005-2007 Sam Stephenson
  *
