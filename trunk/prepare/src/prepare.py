@@ -349,8 +349,15 @@ def start(config=None, dburi=None, dbdebug=False):
     
     # Baue Verbindung(en) zu S3 auf
     log.info("Baue Verbindung(en) zu S3 auf")
-    s3_conn = MyS3.MyAWSAuthConnection(gbs["aws_s3_access_key_id"], gbs["aws_s3_secret_access_key"], is_secure=False)
-    s3_gen = S3.QueryStringAuthGenerator(gbs["aws_s3_access_key_id"], gbs["aws_s3_secret_access_key"], is_secure=False, calling_format=S3.CallingFormat.SUBDOMAIN)
+    try:
+        aws_s3_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
+        aws_s3_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
+    except KeyError, e:
+        logging.exception("Error: Environment Variable " + e + " not defined!")
+        raise
+
+    s3_conn = MyS3.MyAWSAuthConnection(aws_s3_access_key_id, aws_s3_secret_access_key, is_secure=False)
+    s3_gen = S3.QueryStringAuthGenerator(aws_s3_access_key_id, aws_s3_secret_access_key, is_secure=False, calling_format=S3.CallingFormat.SUBDOMAIN)
 
     # Get a listing of all the Keys ("files") in this "bucket"
     if "÷ re-use" == "re-use":

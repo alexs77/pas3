@@ -23,11 +23,12 @@ import S3
 import time
 import sys
 
-aws_s3_access_key_id = "0C5GNE198PW7Y9SRJ5G2"
-aws_s3_secret_access_key = "ETUqgOouvw74IjKl2HhLv9UubV0BEq5k5M9lJo9t"
+aws_s3_access_key_id = "xyz"
+aws_s3_secret_access_key = "xyz"
 
 AWS_ACCESS_KEY_ID = aws_s3_access_key_id
 AWS_SECRET_ACCESS_KEY = aws_s3_secret_access_key
+
 # remove these next two lines when you've updated your credentials.
 #print "update s3-driver.py with your AWS credentials"
 #sys.exit();

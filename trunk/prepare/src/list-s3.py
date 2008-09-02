@@ -10,15 +10,12 @@
 # $Id$
 #===============================================================================
 
-aws_s3_access_key_id = "0C5GNE198PW7Y9SRJ5G2"
-aws_s3_secret_access_key = "ETUqgOouvw74IjKl2HhLv9UubV0BEq5k5M9lJo9t"
-aws_s3_bucket = "bilder.alexander.skwar.name"
-#aws_s3_bucket = "public-files.askwar"
-
 import S3
 import MyS3
 import logging
 import cPickle
+import cherrypy
+import os
 
 if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s %(name)s %(levelname)-8s %(message)s',
@@ -26,6 +23,14 @@ if __name__ == "__main__":
     log = logging.getLogger("prepare.py")
     log.setLevel(logging.INFO)
 
+    #aws_s3_access_key_id = cherrypy.config["aws_s3_access_key_id"]
+    #aws_s3_secret_access_key = cherrypy.config["aws_s3_secret_access_key"]
+    try:
+        aws_s3_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
+        aws_s3_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
+    except KeyError, e:
+        logging.exception("Error: Environment Variable " + e + " not defined!")
+        raise
 
     s3_conn = MyS3.MyAWSAuthConnection(aws_s3_access_key_id, aws_s3_secret_access_key)
     s3_gen = S3.QueryStringAuthGenerator(aws_s3_access_key_id, aws_s3_secret_access_key, is_secure=False, calling_format=S3.CallingFormat.SUBDOMAIN)
