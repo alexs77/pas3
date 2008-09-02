@@ -1,10 +1,12 @@
+#===============================================================================
 # vim: set fileencoding=utf-8
-
+#
 # $LastChangedDate$
 # $LastChangedRevision$
 # $LastChangedBy$
 # $HeadURL$
 # $Id$
+#===============================================================================
 
 """Open an arbitrary URL.
 
