@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+#===============================================================================
+# vim: set fileencoding=utf-8
+#
+# $LastChangedDate$
+# $LastChangedRevision$
+# $LastChangedBy$
+# $HeadURL$
+# $Id$
+#===============================================================================
+
 #  This software code is made available "AS IS" without warranties of any
 #  kind.  You may copy, display, modify and redistribute the software
 #  code either by itself or as incorporated into your code; provided that

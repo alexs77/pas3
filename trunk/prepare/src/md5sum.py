@@ -1,11 +1,14 @@
 #!/usr/bin/python
-# vim: set fileencoding=UTF-8
 
+#===============================================================================
+# vim: set fileencoding=UTF-8
+# 
 # $LastChangedDate$
 # $LastChangedRevision$
 # $LastChangedBy$
 # $HeadURL$
 # $Id$
+#===============================================================================
 
 """
 Re-implementation of md5sum in python

@@ -1,11 +1,14 @@
 #!/usr/bin/python
-# vim: set fileencoding=utf-8
 
+#===============================================================================
+# vim: set fileencoding=utf-8
+# 
 # $LastChangedDate$
 # $LastChangedRevision$
 # $LastChangedBy$
 # $HeadURL$
 # $Id$
+#===============================================================================
 
 aws_s3_access_key_id = "0C5GNE198PW7Y9SRJ5G2"
 aws_s3_secret_access_key = "ETUqgOouvw74IjKl2HhLv9UubV0BEq5k5M9lJo9t"
