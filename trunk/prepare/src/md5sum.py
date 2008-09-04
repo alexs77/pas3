@@ -1,8 +1,7 @@
 #!/usr/bin/python
+# vim: set fileencoding=utf-8
 
 #===============================================================================
-# vim: set fileencoding=UTF-8
-# 
 # $LastChangedDate$
 # $LastChangedRevision$
 # $LastChangedBy$
