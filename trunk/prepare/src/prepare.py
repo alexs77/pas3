@@ -360,9 +360,9 @@ def start(config=None, dburi=None, dbdebug=False):
 
     # Get a listing of all the Keys ("files") in this "bucket"
     if "÷ re-use" == "re-use":
-        print "Werde s3_bucket_keys Pickle aus s3_bucket_keys.pickle lesen"
+        log.info("Werde s3_bucket_keys Pickle aus s3_bucket_keys.pickle lesen")
         f = open("s3_bucket_keys.pickle", "r") ; s3_bucket_keys = cPickle.load(f) ; f.close()
-        print "Werde s3_contents Pickle aus s3_contents.pickle lesen"
+        log.info("Werde s3_contents Pickle aus s3_contents.pickle lesen")
         f = open("s3_contents.pickle", "r") ; s3_contents = cPickle.load(f) ; f.close()
     else:
         log.info("Erzeuge Listing des Buckets '%s'. Dies kann etwas dauern..." % gbs["aws_s3_bucket"])
