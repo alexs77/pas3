@@ -250,7 +250,9 @@ def getAllPhotos():
       %s \
       %s \
       order by a.id" % (processIdsQuery, hiddenQuery)
-
+    
+    # print "query in getAllPhotos: “%s”" % (query)
+    
     return sql.execute(query)
 
 def getAllPhotoVersions():
@@ -279,6 +281,8 @@ def getAllPhotoVersions():
       %s \
       %s \
       order by a.id" % (processIdsQuery, hiddenQuery)
+
+    # print "query in getAllPhotoVersions: “%s”" % (query)
 
     return sql.execute(query)
 
@@ -310,10 +314,11 @@ def start(config=None, dburi=None, dbdebug=False):
     log.info("Starte Vorbereitung der Bilder")
     
     cherrypy.config.update(config)
-    gbs = cherrypy.config
+    cherrypy.config = cherrypy.config
 
     # Größe der Thumbnailbilder aus der Konfiguration auslesen
-    resizedSizes = {'thumbnail': cherrypy.config.get("thumbnailPhotoSize", (200,150)),
+    resizedSizes = {
+      'thumbnail': cherrypy.config.get("thumbnailPhotoSize", (200,150)),
       'medium': cherrypy.config.get("mediumPhotoSize", (640,480)),
       'tiny': cherrypy.config.get("tinyPhotoSize", (32,32))
     }
@@ -323,26 +328,26 @@ def start(config=None, dburi=None, dbdebug=False):
     mt = mimetypes.MimeTypes(strict = False)
     
     # this next line is a hack to give us early access to the database
-    if gbs.has_key("dblocation"):
-        dburi = "sqlite://" + gbs.get("dblocation")
+    if cherrypy.config.has_key("dblocation"):
+        dburi = "sqlite://" + cherrypy.config.get("dblocation")
         from pysqlite2 import dbapi2 as sqlite
     conn.threadConnection = connect(dburi, debug=dbdebug, cache=None, process=False)
     databaseDebug = dbdebug
     databaseUri = dburi
     sql = SQLCache()
     
-    gbs["requiredTagIds"] = []
-    if gbs.has_key("requiredTags"):
-        for t in gbs["requiredTags"]:
+    cherrypy.config["requiredTagIds"] = []
+    if cherrypy.config.has_key("requiredTags"):
+        for t in cherrypy.config["requiredTags"]:
             try:
-                gbs["requiredTagIds"].append(Tag.byName(t).id)
+                cherrypy.config["requiredTagIds"].append(Tag.byName(t).id)
             except:
                 print "***** unable to force required tag: %s (%s)" % (t, sys.exc_info()[0])
-    gbs["hiddenTagIds"] = []
-    if gbs.has_key("hiddenTags"):
-        for t in gbs["hiddenTags"]:
+    cherrypy.config["hiddenTagIds"] = []
+    if cherrypy.config.has_key("hiddenTags"):
+        for t in cherrypy.config["hiddenTags"]:
             try:
-                gbs["hiddenTagIds"].append(Tag.byName(t).id)
+                cherrypy.config["hiddenTagIds"].append(Tag.byName(t).id)
             except:
                 print "***** unable to force required hidden tag: %s (%s)" % (t, sys.exc_info()[0])
     
@@ -359,19 +364,19 @@ def start(config=None, dburi=None, dbdebug=False):
     s3_gen = S3.QueryStringAuthGenerator(aws_s3_access_key_id, aws_s3_secret_access_key, is_secure=False, calling_format=S3.CallingFormat.SUBDOMAIN)
 
     # Get a listing of all the Keys ("files") in this "bucket"
-    if "÷ re-use" == "re-use":
+    if "÷ re-use" == "÷ re-use":
         log.info("Werde s3_bucket_keys Pickle aus s3_bucket_keys.pickle lesen")
         f = open("s3_bucket_keys.pickle", "r") ; s3_bucket_keys = cPickle.load(f) ; f.close()
         log.info("Werde s3_contents Pickle aus s3_contents.pickle lesen")
         f = open("s3_contents.pickle", "r") ; s3_contents = cPickle.load(f) ; f.close()
     else:
-        log.info("Erzeuge Listing des Buckets '%s'. Dies kann etwas dauern..." % gbs["aws_s3_bucket"])
-        s3_bucket_keys = s3_conn.list_all_bucket_keys(gbs["aws_s3_bucket"])
+        log.info("Erzeuge Listing des Buckets '%s'. Dies kann etwas dauern..." % cherrypy.config["aws_s3_bucket"])
+        s3_bucket_keys = s3_conn.list_all_bucket_keys(cherrypy.config["aws_s3_bucket"])
         s3_contents = dict(map(lambda x: (x.key, x.etag.strip('"')), s3_bucket_keys))
         #s3_contents = dict()
     
     # Nur für Debug!
-    if "write" == "write":
+    if "!write" == "write":
         print "Werde content_keys.txt schreiben"
         fh_contents = open("contents_keys.txt", "w")
         fh_contents.write( "\n".join(map(str, s3_contents.keys())) )
@@ -435,167 +440,171 @@ def start(config=None, dburi=None, dbdebug=False):
         # Die Bilder liegen auf S3 unterhalb von/im aws_s3_image_bucket.
         # Konstruiere die URL zu dem Bild.
 
-	# 2008-08-05:
-	# Seit "kurzem" speichert f-spot die Dateinamen gequotet in der Datenbank
-	# ab.
-	# Früher hieß es:
-	# file:///home/askwar/Desktop/My Pictures/Photos/Kategorien/Cédric/2008-03-03/[2008-03-02--15.53.20] (cimg5226) Sandra, Cédric, Läuft, Winterthur {2.6 MB}.jpg
-	# Jetzt heißt es:
-	# file:///home/askwar/Desktop/My Pictures/Photos/Kategorien/Cassandras Kamera/(IMG_0001) Cassandras Kamera%2C Zuhause%2C Winterthur.jpg
-	# Zu beachten ist, das jetzt die , durch %2C ersetzt wurden.
-	# Darum muss der Basename einmal unquoted werden, so das nicht "%2C" gequoted
-	# wird und zu "%252C" wird.
+        # 2008-08-05:
+        # Seit "kurzem" speichert f-spot die Dateinamen gequotet in der Datenbank
+        # ab.
+        # Früher hieß es:
+        # file:///home/askwar/Desktop/My Pictures/Photos/Kategorien/Cédric/2008-03-03/[2008-03-02--15.53.20] (cimg5226) Sandra, Cédric, Läuft, Winterthur {2.6 MB}.jpg
+        # Jetzt heißt es:
+        # file:///home/askwar/Desktop/My Pictures/Photos/Kategorien/Cassandras Kamera/(IMG_0001) Cassandras Kamera%2C Zuhause%2C Winterthur.jpg
+        # Zu beachten ist, das jetzt die , durch %2C ersetzt wurden.
+        # Darum muss der Basename einmal unquoted werden, so das nicht "%2C" gequoted
+        # wird und zu "%252C" wird.
 
-	# Alt:
-	#fileBaseName = fileName[len(gbs['img_path_prefix_strip']):]
-	# Neu:
-	fileBaseName = urllib.unquote_plus(fileName[len(gbs['img_path_prefix_strip']):])
-    data['images']['original']['url'] = 'http://s3.amazonaws.com/' + urllib.quote(
-        codecs.encode('%s/%s/%s' % (
-            gbs["aws_s3_image_bucket"], gbs["aws_s3_image_prefix"], fileBaseName
-        ), 'utf-8')
-    )
+        # Alt:
+        #fileBaseName = fileName[len(cherrypy.config['img_path_prefix_strip']):]
+        # Neu:
+        fileBaseName = urllib.unquote_plus(fileName[len(cherrypy.config['img_path_prefix_strip']):])
+        data['images']['original']['url'] = 'http://s3.amazonaws.com/' + urllib.quote(
+            codecs.encode('%s/%s/%s' % (
+                cherrypy.config["aws_s3_image_bucket"], cherrypy.config["aws_s3_image_prefix"], fileBaseName
+            ), 'utf-8')
+        )
         
-    # print "fileName = %s" % repr(fileName)
-    # print "directoryPath = %s" % repr(directoryPath)
-    # print 'fileRoot = %s' % repr(fileRoot)
-    # print 'fileExt = %s' % repr(fileExt)
-    # print 'filePath = %s' % repr(filePath)
-    # print "data['images']['original']['url'] = %s" % data['images']['original']['url']
-	# log.info("%06d,%02d: fileName=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileName)))
-	# log.info("%06d,%02d: fileBaseName=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileName)))
-	# log.info("%06d,%02d: directoryPath=%s" % (data['ids']['picture'], data['ids']['version'], repr(directoryPath)))
-	# log.info("%06d,%02d: fileRoot=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileRoot)))
-	# log.info("%06d,%02d: fileExt=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileExt)))
-	# log.info("%06d,%02d: filePath=%s" % (data['ids']['picture'], data['ids']['version'], repr(filePath)))
-	# log.info("%06d,%02d: data images original url=%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+        # print "fileName = %s" % repr(fileName)
+        # print "directoryPath = %s" % repr(directoryPath)
+        # print 'fileRoot = %s' % repr(fileRoot)
+        # print 'fileExt = %s' % repr(fileExt)
+        # print 'filePath = %s' % repr(filePath)
+        # print "data['images']['original']['url'] = %s" % data['images']['original']['url']
+        # log.info("%06d,%02d: fileName=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileName)))
+        # log.info("%06d,%02d: fileBaseName=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileName)))
+        # log.info("%06d,%02d: directoryPath=%s" % (data['ids']['picture'], data['ids']['version'], repr(directoryPath)))
+        # log.info("%06d,%02d: fileRoot=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileRoot)))
+        # log.info("%06d,%02d: fileExt=%s" % (data['ids']['picture'], data['ids']['version'], repr(fileExt)))
+        # log.info("%06d,%02d: filePath=%s" % (data['ids']['picture'], data['ids']['version'], repr(filePath)))
+        # log.info("%06d,%02d: data images original url=%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+            
+        # Öffne die Datei
+        data['images']['original']['handle'] = urllib.urlopen(url = data['images']['original']['url'])
+        # Pfad zu der Datei und Extension speichern
+        data['images']['original']['name'], data['images']['original']['ext'] = (filePath, fileExt)
         
-    # Öffne die Datei
-    data['images']['original']['handle'] = urllib.urlopen(url = data['images']['original']['url'])
-    data['images']['original']['name'], data['images']['original']['ext'] = (filePath, fileExt)
-
-	# log.info("%06d,%02d: data images original handle info()=%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['handle'].info()))
-	# log.info("%06d,%02d: data images original handle info() etag=%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['handle'].info()['etag']))
-
-    # MD5 Hash bestimmen -> Wird als ETag Header geliefert, allerdings in "" -> Weg mit den "!
-    try:
-        data['images']['original']['hash'] = data['images']['original']['handle'].info()['etag'].strip('"')
-    except KeyError:
-        log.error("%06d,%02d - %s: KeyError aufgetreten. Gibt's das Bild an der angegebenen URL?" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
-        raise
-	
-    # Erzeuge auch UTF-8 kodierte Varianten der Dateinamen
-    (fileRoot_U8, fileExt_U8, filePath_U8, fileName_U8, directoryPath_U8) = (
-     codecs.encode(fileRoot, "UTF-8"), codecs.encode(fileExt, "UTF-8"),
-     codecs.encode(filePath, "UTF-8"), codecs.encode(fileName, "UTF-8"),
-     codecs.encode(directoryPath, "UTF-8"))
-
-    # Speichere aktuelle ID -> Dateiname in der Namensdatenbank nameDb
-    nameDb.append("%s\t%s\t%s\t%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], filePath_U8))
-
-    # Name/URL der Datei auf s3:
-    # http://$bucket.s3.amazonaws.com/$key
-    # key = $pfad/$größe/$photo_id/version/$version_id
-    # NEU:
-    # key = $pfad/$photo_id.$version_id.$größe.$ext
-    # $photo_id ist IMMER 6-stellig und von links mit 0 aufgefüllt; $version_id ist 2-stellig.
-    # z.B.
-    # bucket = bilder.alexander.skwar.name, pfad = images, größe = original, photo_id = 5303, version_id = 1
-    # -> http://bilder.alexander.skwar.name.s3.amazonaws.com/images/original/5303/version/1
-    # NEU:
-    # -> http://bilder.alexander.skwar.name.s3.amazonaws.com/images/005303.01.original.jpeg
-    #
-    # Daneben wird auch noch eine Datei $key.exif.pickle angelegt. Diese Datei
-    # beinhaltet die EXIF tags als Pickle.
-    # Wenn alle Dateien geuploadet wurden, wird im $pfad auch noch eine Datei
-    # TRANSLATION.TXT erzeugt. In dieser Datei wird einer ID der Originaldatei
-    # gegenüber gestellt.
-    # Bsp.:
-    # 5303  /home/askwar/Desktop/My Pictures/Photos/Kategorien/Cassandra/[2007-08-07 08-00-19] (CIMG3685) Cédric, Cassandra, Auf Couch liegend und spielend, Wohnzimmer, Zuhause, Winterthur {2,8 MB}.jpg
-    # Die Eleemente werden hierbei intern in einer Liste geführt. Um das ganze
-    # dann zu einer durch \n getrennten Zeichenkette umzuwandeln, ist laut
-    # http://groups.google.de/group/comp.lang.python/msg/91dda6e695fa6f73
-    # (Suche nach "python list elements join") auszuführen:
-    #   "\n".join(map(str, list))
-
-    # Zuerst wird das Originalbild bearbeitet.
-    size = "original"
-    # MIME-Type bestimmen
-    log.info("%06d,%02d - %s: Bestimme MIME-Type" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
-    (mimetype, encoding) = mt.guess_type(url = data['images']['original']['url'], strict = False)
-    # Default sei "application/octet-stream"
-    if mimetype is None: mimetype = "application/octet-stream"
-    # MIME-Type der Originaldatei speichern
-    data['images']['original']['mime'] = mimetype
-    
-    # S3 Key erzeugen
-    s3_key = create_s3_key(gbs["aws_s3_path"], data['ids']['picture'],
-      data['ids']['version'], size, mt.guess_extension(data['images']['original']['mime']))
-    
-    #print "s3_key = %s" % repr(s3_key)
-
-    log.info("%06d,%02d - %s: Bearbeite Bild #%s; Key: %s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], data['ids']['picture'], s3_key))
-    
-    # Sofern der neu erzeugte s3_key (Pfad bei s3) noch NICHT in
-    # s3_contents (Listing der Dateien im Bucket) auftaucht, uploade
-    # die Datei.
-    # Fall der s3_key in s3_contents vorhanden ist, überprüfe, ob
-    # die md5sum (hash) mit der md5sum (ETag) auf s3 übereinstimmt.
-    # Falls dem nicht so ist (hash != ETag), dann uploade.
-
-    # Falls geuploaded wurde (bzw. werden soll), dann auch kleinere
-    # Bilder (Thumbnail, Medium, Tiny) erzeugen und uploaden.
-    # -> Überprüfen, ob's die Datei schon auf S3 gibt.
-    # --> Wenn ja, dann ist die MD5 zu vergleichen
-    # --> Wenn nein, dann muss auf jeden Fall geuploaded werden.
-    do_upload = not s3_contents.has_key(s3_key)
-    if not do_upload:
-        log.info("%06d,%02d - %s: Datei bereits auf S3 vorhanden" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
-
-        # Bisher sollte NICHT geuploadet werden; dh. die Datei gibt's
-        # schon auf s3. Überprüfen, ob Checksummen übereinstimmen.
+        # log.info("%06d,%02d: data images original handle info()=%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['handle'].info()))
+        # log.info("%06d,%02d: data images original handle info() etag=%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['handle'].info()['etag']))
         
-        do_upload = s3_contents[s3_key] != data['images']['original']['hash']
-        if do_upload:
-            try:
-                log.info(u"%06d,%02d - %s: Checksummen der lokalen Datei (%s) und der S3 Datei (%s) sind nicht identisch -> Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], data['images']['original']['hash'], s3_contents[s3_key]))
-            except UnicodeDecodeError:
-                log.info("%06d,%02d - %s: Checksummen der lokalen Datei (%s) und der S3 Datei (%s) sind nicht identisch -> Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], data['images']['original']['hash'], s3_contents[s3_key]))
+        # MD5 Hash bestimmen -> Wird als ETag Header geliefert, allerdings in "" -> Weg mit den "!
+        try:
+            data['images']['original']['hash'] = data['images']['original']['handle'].info()['etag'].strip('"')
+        except KeyError:
+            log.error("%06d,%02d - %s: KeyError aufgetreten. Gibt's das Bild an der angegebenen URL?" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+            raise
+        
+        # Erzeuge auch UTF-8 kodierte Varianten der Dateinamen
+        fileRoot_U8 = codecs.encode(fileRoot, "UTF-8")
+        fileExt_U8 = codecs.encode(fileExt, "UTF-8"),
+        filePath_U8 = codecs.encode(filePath, "UTF-8")
+        fileName_U8 = codecs.encode(fileName, "UTF-8")
+        directoryPath_U8 = codecs.encode(directoryPath, "UTF-8")
+        
+        # Speichere aktuelle ID -> Dateiname in der Namensdatenbank nameDb
+        nameDb.append("%s\t%s\t%s\t%s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], filePath_U8))
+        
+        # Name/URL der Datei auf s3:
+        # http://$bucket.s3.amazonaws.com/$key
+        # key = $pfad/$größe/$photo_id/version/$version_id
+        # NEU:
+        # key = $pfad/$photo_id.$version_id.$größe.$ext
+        # $photo_id ist IMMER 6-stellig und von links mit 0 aufgefüllt; $version_id ist 2-stellig.
+        # z.B.
+        # bucket = bilder.alexander.skwar.name, pfad = images, größe = original, photo_id = 5303, version_id = 1
+        # -> http://bilder.alexander.skwar.name.s3.amazonaws.com/images/original/5303/version/1
+        # NEU:
+        # -> http://bilder.alexander.skwar.name.s3.amazonaws.com/images/005303.01.original.jpeg
+        #
+        # Daneben wird auch noch eine Datei $key.exif.pickle angelegt. Diese Datei
+        # beinhaltet die EXIF tags als Pickle.
+        # Wenn alle Dateien geuploadet wurden, wird im $pfad auch noch eine Datei
+        # TRANSLATION.TXT erzeugt. In dieser Datei wird einer ID der Originaldatei
+        # gegenüber gestellt.
+        # Bsp.:
+        # 5303  /home/askwar/Desktop/My Pictures/Photos/Kategorien/Cassandra/[2007-08-07 08-00-19] (CIMG3685) Cédric, Cassandra, Auf Couch liegend und spielend, Wohnzimmer, Zuhause, Winterthur {2,8 MB}.jpg
+        # Die Eleemente werden hierbei intern in einer Liste geführt. Um das ganze
+        # dann zu einer durch \n getrennten Zeichenkette umzuwandeln, ist laut
+        # http://groups.google.de/group/comp.lang.python/msg/91dda6e695fa6f73
+        # (Suche nach "python list elements join") auszuführen:
+        #   "\n".join(map(str, list))
+        
+        # Zuerst wird das Originalbild bearbeitet.
+        size = "original"
+        # MIME-Type bestimmen
+        log.info("%06d,%02d - %s: Bestimme MIME-Type" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+        (mimetype, encoding) = mt.guess_type(url = data['images']['original']['url'], strict = False)
+        # Default sei "application/octet-stream"
+        if mimetype is None: mimetype = "application/octet-stream"
+        # MIME-Type der Originaldatei speichern
+        data['images']['original']['mime'] = mimetype
+        
+        # S3 Key erzeugen
+        s3_key = create_s3_key(cherrypy.config["aws_s3_path"], data['ids']['picture'],
+          data['ids']['version'], size, mt.guess_extension(data['images']['original']['mime']))
+        
+        log.info("%06d,%02d - %s: Bearbeite Bild #%s; Key: %s" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], data['ids']['picture'], s3_key))
+        
+        # Sofern der neu erzeugte s3_key (Pfad bei s3) noch NICHT in
+        # s3_contents (Listing der Dateien im Bucket) auftaucht, uploade
+        # die Datei.
+        # Fall der s3_key in s3_contents vorhanden ist, überprüfe, ob
+        # die md5sum (hash) mit der md5sum (ETag) auf s3 übereinstimmt.
+        # Falls dem nicht so ist (hash != ETag), dann uploade.
+        
+        # Falls geuploaded wurde (bzw. werden soll), dann auch kleinere
+        # Bilder (Thumbnail, Medium, Tiny) erzeugen und uploaden.
+        # -> Überprüfen, ob's die Datei schon auf S3 gibt.
+        # --> Wenn ja, dann ist die MD5 zu vergleichen
+        # --> Wenn nein, dann muss auf jeden Fall geuploaded werden.
+        do_upload = not s3_contents.has_key(s3_key)
+        if not do_upload:
+            log.info("%06d,%02d - %s: Datei bereits auf S3 vorhanden" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+            
+            # Bisher sollte NICHT geuploadet werden; dh. die Datei gibt's
+            # schon auf s3. Überprüfen, ob Checksummen übereinstimmen.
+            
+            do_upload = s3_contents[s3_key] != data['images']['original']['hash']
+            if do_upload:
+                try:
+                    log.info(u"%06d,%02d - %s: Checksummen der lokalen Datei (%s) und der S3 Datei (%s) sind nicht identisch -> Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], data['images']['original']['hash'], s3_contents[s3_key]))
+                except UnicodeDecodeError:
+                    log.info("%06d,%02d - %s: Checksummen der lokalen Datei (%s) und der S3 Datei (%s) sind nicht identisch -> Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'], data['images']['original']['hash'], s3_contents[s3_key]))
+            else:
+                log.info("%06d,%02d - %s: Checksummen identisch -> Kein Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
         else:
-            log.info("%06d,%02d - %s: Checksummen identisch -> Kein Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
-    else:
-        log.info("%06d,%02d - %s: Datei noch NICHT auf S3 vorhanden -> Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'])) 
+            log.info("%06d,%02d - %s: Datei noch NICHT auf S3 vorhanden -> Upload!" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url'])) 
+            
+        if do_upload:
+            log.info("%06d,%02d - %s: Datei soll geuploadet werden. Bearbeite das Bild zuerst." % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+            # Es soll geuploadet werden.
+            # Grund: Entweder gab's die Datei noch nicht oder aber die
+            # Checksummen stimmen nicht überein.
+            
+            # Bearbeite das Bild (verkleinern, EXIF, ...)
+            data['images'].update(process_image(data['images']['original'], resizedSizes))
+            
+            log.info("%06d,%02d - %s: Bilder uploaden" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
+            upload_images(data, cherrypy.config, s3_conn, s3_gen)
+            
+            # Speicher freigeben
+            for key in resizedSizes.keys():
+                del(data['images'][key]['data'])
+            
+        # Bild wird nicht weiter benötigt -> Schließen!
+        data['images']['original']['handle'].close()
         
-    if do_upload:
-        log.info("%06d,%02d - %s: Datei soll geuploadet werden. Bearbeite das Bild zuerst." % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
-        # Es soll geuploadet werden.
-        # Grund: Entweder gab's die Datei noch nicht oder aber die
-        # Checksummen stimmen nicht überein.
-
-        # Bearbeite das Bild (verkleinern, EXIF, ...)
-        data['images'].update(process_image(data['images']['original'], resizedSizes))
+        print "++++++++++ Behandlung der Datei %s (%06d,%02d) abgeschlossen." % (filePath_U8, data['ids']['picture'], data['ids']['version'])
         
-        log.info("%06d,%02d - %s: Bilder uploaden" % (data['ids']['picture'], data['ids']['version'], data['images']['original']['url']))
-        upload_images(data, cherrypy.config, s3_conn, s3_gen)
-        
-        # Speicher freigeben
-        for key in resizedSizes.keys():
-            del(data['images'][key]['data'])
-        
-    # Bild wird nicht weiter benötigt -> Schließen!
-    data['images']['original']['handle'].close()
-    
-    print "++++++++++ Behandlung der Datei %s (%06d,%02d) abgeschlossen." % (filePath_U8, data['ids']['picture'], data['ids']['version'])
-
     log.info("Alle Dateien hochgeladen. Sende nun TRANSLATION.txt.")
     newFileName = "TRANSLATION.txt"
     fileData = "\n".join(map(str, nameDb))
-    s3_key = gbs["aws_s3_path"] + "/" + newFileName
-    s3_response = s3_conn.put(gbs["aws_s3_bucket"], s3_key,
-      S3.S3Object(fileData, {'original-file-name': newFileName}), headers = {
-        'x-amz-acl': 'public-read',
-        'Content-Disposition': 'inline; filename="%s"' % newFileName,
-        'Content-Type': 'text/plain' } )
+    s3_key = cherrypy.config["aws_s3_path"] + "/" + newFileName
+    s3_headers = {
+      'x-amz-acl': 'public-read',
+      'Content-Disposition': 'inline; filename="%s"' % newFileName,
+      'Content-Type': 'text/plain' 
+    }
+    s3_response = s3_conn.put(
+      cherrypy.config["aws_s3_bucket"], s3_key,
+      S3.S3Object(fileData, {'original-file-name': newFileName}), s3_headers
+    )
     log.info("\tnach TRANSLATION.txt -> Status: %s, Reason: %s, body: %s" % (s3_response.http_response.status, s3_response.http_response.reason, s3_response.body))
     
     log.info("=*=*=*=*  FINISHED!!! *=*=*=*=*=")
