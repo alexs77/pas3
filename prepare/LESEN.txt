@@ -1,0 +1,59 @@
+Prepare wird auf Amazon EC2 ausgeführt, scheint's.
+Dazu müssen zuerst alle Bilder in den Bucket
+bilder.alexander.skwar.name nach Kategorien
+geuploadet werden. prepare auf ec2 holt sich
+dann die Bilder von da und speichert sie in
+images.alexander.skwar.name.
+
+Dann wird das richtige Image auf EC2 gestartet. Um zu schauen,
+welche Images es gibt, ist ec2-describe-images auszuführen:
+
+benutzer@horst:~$ ec2-describe-images
+IMAGE    ami-450ce92c    ec2.asn/asn.gentoo.prepare.2008-02-24_17.manifest.xml
+618991716212    available    private   
+IMAGE    ami-6117f208    ec2.asn/asn.gentoo.prepare.2008-03-05_11.manifest.xml
+618991716212    available    private   
+IMAGE    ami-6517f20c    ec2.asn/asn.gentoo.prepare.2008-03-05_12.manifest.xml
+618991716212    available    private   
+IMAGE    ami-7d0ce914    ec2.asn/asn.gentoo.prepare.2008-02-24_12.manifest.xml
+618991716212    available    private   
+IMAGE    ami-950de8fc    ec2.asn/asn.gentoo.prepare.2008-02-24.manifest.xml
+618991716212    available    private   
+IMAGE    ami-c015f0a9    ec2.asn/asn.gentoo.prepare.2008-03-03_21.manifest.xml
+618991716212    available    private   
+IMAGE    ami-f502e79c    ec2.asn/asn.gentoo.prepare.2008-02-22.manifest.xml
+618991716212    available    private   
+
+Das richtige Image ist das neueste Image (hoffe
+ich...). In diesem Falle wäre dies also "ami-6517f20c".
+
+Um eine Instance mit diesem Image zu starten, ist
+"ec2-run-instances" auszufüren. ec2-run-instances
+ist die "ami-id" zu übergeben. Quasi so:
+
+$ ec2-run-instances ami-6517f20c
+
+Was die Instanz(en) so machen, kann mit "ec2-describe-instances"
+ermittelt werden:
+
+benutzer@horst:~$ ec2-describe-instances
+RESERVATION    r-a00ec6c9    618991716212    default
+INSTANCE    i-f1ba6598    ami-6517f20c
+ec2-67-202-37-89.compute-1.amazonaws.com
+domU-12-31-38-00-7C-52.compute-1.internal    running        0        m1.small
+2008-07-31T23:05:54+0000
+
+Diese Instanz läuft und hat den DNS Namen
+"ec2-67-202-37-89.compute-1.amazonaws.com".
+
+Um sich darauf dann einzuloggen, ist SSH und User
+root zu verwenden. Und es muss der id_rsa-gsg-keypair
+verwendet werde. Aufruf quasi so:
+
+$ DNS_NAME="ec2-67-202-37-89.compute-1.amazonaws.com"
+$ ssh -i id_rsa-gsg-keypair -l root $DNS_NAME
+
+Dann gibt's auf dem virtuellen Rechner bei EC2
+das Verzeichnis ~root/prepare und dort prepare.py.
+
+Diese Datei ist auszuführen.
