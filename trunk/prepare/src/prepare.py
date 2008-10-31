@@ -364,7 +364,7 @@ def start(config=None, dburi=None, dbdebug=False):
     s3_gen = S3.QueryStringAuthGenerator(aws_s3_access_key_id, aws_s3_secret_access_key, is_secure=False, calling_format=S3.CallingFormat.SUBDOMAIN)
 
     # Get a listing of all the Keys ("files") in this "bucket"
-    if "÷ re-use" == "÷ re-use":
+    if "!÷ re-use" == "÷ re-use":
         log.info("Werde s3_bucket_keys Pickle aus s3_bucket_keys.pickle lesen")
         f = open("s3_bucket_keys.pickle", "r") ; s3_bucket_keys = cPickle.load(f) ; f.close()
         log.info("Werde s3_contents Pickle aus s3_contents.pickle lesen")
