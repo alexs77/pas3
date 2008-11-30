@@ -1,8 +1,10 @@
-#! /bin/sh
+#! /bin/bash
 
-$HOME/bin/Prepare-ohne-shutdown
+scripts_dir=$(dirname "$0")
 
-/sbin/shutdown -h -P -n now
+echo "$scripts_dir"/Prepare-ohne-shutdown
+
+echo /sbin/shutdown -h -P -n now
 
 exit 0
 # EOF #
