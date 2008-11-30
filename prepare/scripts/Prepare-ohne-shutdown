@@ -1,0 +1,19 @@
+#! /bin/sh
+logfile=`mktemp`
+cd $HOME/prepare/src
+start=`date`
+time ./prepare.py -c prepare-ec2.conf 2>&1 | tee "$logfile"
+ende=`date`
+
+(echo "Prepare Report vom `date`:" ; echo "========================="
+printf "Start:\t%s\nEnde:\t%s\n=====================\n" "$start" "$ende"
+tac "$logfile" | head -n 100
+) | \
+LANG=de_DE.UTF8 from="$(hostname)@skwar.in (EC2 prepare `hostname`)" \
+nail -s "Prepare auf EC2" -a "$logfile" alexander@skwar.name
+
+echo "================================================================================"
+printf "Start:\t%s\nEnde:\t%s\n" "$start" "$ende"
+
+exit 0
+# EOF #
