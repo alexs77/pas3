@@ -2,9 +2,9 @@
 
 scripts_dir=$(dirname "$0")
 
-echo "$scripts_dir"/Prepare-ohne-shutdown
+"$scripts_dir"/Prepare-ohne-shutdown
 
-echo /sbin/shutdown -h -P -n now
+/sbin/shutdown -h -P -n now
 
 exit 0
 # EOF #
