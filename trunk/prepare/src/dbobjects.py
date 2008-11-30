@@ -108,7 +108,6 @@ class Tag(SQLObject):
     class sqlmeta:
         table = "tags"
     name = UnicodeCol(notNone=True, alternateID=True)
-    print "nach name"
     categoryId = IntCol()
     isCategory = BoolCol()
     sortPriority = IntCol()

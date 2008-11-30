@@ -585,7 +585,11 @@ def start(config=None, dburi=None, dbdebug=False):
             
             # Speicher freigeben
             for key in resizedSizes.keys():
-                del(data['images'][key]['data'])
+	        # Aber auch nur, falls es überhaupt was zu löschen gibt :)
+		if data['images'] is not None:
+                    if data['images'][key] is not None:
+                        if data['images'][key]['data'] is not None:
+                            del(data['images'][key]['data'])
             
         # Bild wird nicht weiter benötigt -> Schließen!
         data['images']['original']['handle'].close()
