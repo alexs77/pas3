@@ -1,0 +1,8 @@
+#! /bin/sh
+
+$HOME/bin/Prepare-ohne-shutdown
+
+/sbin/shutdown -h -P -n now
+
+exit 0
+# EOF #
