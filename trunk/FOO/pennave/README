@@ -1,0 +1,19 @@
+PennAve - A Online Photo Gallery Application
+Copyright (c) 2004-2007 Patrick Wagstrom
+
+Version 0.4
+***********
+
+Whats New?
+ * Instead of always rendering a client side graphic for stacked images, the
+   simple markup language can now utilize the canvas tag present in newer
+   versions of mozilla.
+ * EXIF tags in the output XML.  This corresponds to the EXIF RDF format
+ * Handles the Last-Modified header on generated images, allowing caching
+ * Ability to reverse the order of photos being viewed
+
+Bug Fixes?
+ * Some improved support for UTF-8 tag names
+ * Images that have the orientation EXIF tag set will be rotated accordingly
+ * Fixed crash on empty set
+ * Fixed problems with uppercase filenames

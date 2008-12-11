@@ -1,0 +1,58 @@
+<!--
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+-->
+<html>
+  <head>
+    <title>Welcome to my PennAve Photo Gallery!</title>
+    <script language="javascript" type="text/javascript">
+      var prefix="::PREFIX::";
+    </script>
+    <script src="::PREFIX::/js/canvas.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="::PREFIX::/css/welcome.css"/>
+  </head>
+  <body>
+    <h1>Welcome to my PennAve Photo Gallery!</h1>
+    <p>
+      Welcome to my collection of online photographs, powered by <a
+      href="http://pennave.sf.net/">PennAve</a>.  Feel free to browse my
+      <paLink type="browse">complete collection of photos</paLink>.  If you're the owner
+      of this gallery, you might want to consider modifying pennave/static/html/welcome.html
+      to create a little better of a welcome page for your visitors.
+    </p>
+    <table border="0">
+      <tr>
+        <td>
+          <paLink type="browse" categories="Favorites"><paImg type="stacked" categories="Favorites" border="0"/></paLink>
+        </td>
+        <td>
+          <h2><paLink type="browse" categories="Favorites">My Favorite Photos</paLink></h2>
+          <p>These are the photos that I've marked as my favorite photos.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <paLink type="browse" categories="People+"><paImg type="stacked" categories="People+" border="0"/></paLink>
+        </td>
+        <td>
+          <h2><paLink type="browse" categories="People+">Photos of People</paLink></h2>
+          <p>If I've tagged a photo as being of a person, you'll find it here.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <paLink type="browse"><paImg type="stacked" border="0"/></paLink>
+        </td>
+        <td>
+          <h2><paLink type="browse" categories="People+">All My Photos</paLink></h2>
+          <p>Following this link will let you browse all of my photos.</p>
+        </td>
+      </tr>
+    </table>
+    <hr/>
+    <a href="http://pennave.sf.net/">Powered by PennAve</a>
+  </body>
+</html>
