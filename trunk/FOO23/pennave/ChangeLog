@@ -1,0 +1,539 @@
+2008-05-26  Patrick Wagstrom  <patrick@wagstrom.net>
+	* src/pennave.py: fixes for new f-spot schema
+	* src/dbobjects.py: fixes for new f-spot schema
+	* src/images.py: fixes for new f-spot schema
+
+2008-02-07  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* static/xslt/pennave.xsl: added my google analytics code, need
+	to remove before distributing
+
+2007-11-18  Patrick Wagstrom  <patrick@wagstrom.net>
+
+	* static/js/pennave.js: lots of updates, photos highlight now, tag
+	selection works.
+
+2007-11-16  Patrick Wagstrom  <patrick@wagstrom.net>
+
+	* src/pennave.py: preliminary commit of new system
+	* static/js/pennave.js: main ajax script
+	* static/js/logging.js: logging script
+	* css/pennave2.css: new style sheet for ajax
+	* static/js/lib/*: scriptaculous library
+
+2007-06-30  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/dbobjects.py: cleaned up code
+	* src/pennave.py: cleaned up code
+	
+2007-06-28  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/images.py: refactored some code to clean it up
+	
+	* src/dbobjects.py:
+	* src/pennave.py: fixed braindead problem where the cotrrect version of images
+	were not being returned.	
+	
+2007-06-08  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py: support for localization
+	* static/xslt/lang/en.xsl: english language
+	* static/xslt/lang/de.xsl: german language from Alexander Skwar
+	* static/xslt/pennave.xsl: changes for localization
+	
+2007-06-07  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py: created new xmlString function to replace all those old
+	codecs.encode functions. Also corrects bug with & characters in descriptions. As
+	noted by Alexander Skwar.
+	
+	* src/default.conf, src/hedgehog.conf: change the default address to 127.0.0.1
+	
+	* static/pennave.xsl: always force full URLs for tag browse. Thanks to Alexander
+	Skwar for finding all of these issues.
+	* src/pennave.py: fix bug with not adding trailing / to URLs
+	* static/js/canvas.js: unbreak opera by disallowing canvas objects
+	* src/images.py: allow .png for stacked images extension. Allow default.png take
+	the place of no tags at all.
+	
+	* src/images.py: fixed issues with broken thumbnails, beginning of support
+	for adding extensions to image names
+	
+2007-06-05  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/EXIF.py: made interpretation of EXIF tags VERY loose. To make it strict
+	again, set CONFIG_STRICT in EXIF.py. Like the web, I believe the default should
+	be to accept.
+	
+2007-05-31  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	
+	* INSTALL: instructions for mod_python
+
+	* src/pennave.py: changes for mod_python
+	* src/mppennave.py: handler for mod_python
+
+2007-05-29  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/images.py: utilize the mime-type setup from PIL instead of internal
+	
+2007-05-28  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/dbobjects.py: created a new TagRepr class to store tags when not using
+	SQLObject.
+	* src/pennave.py: fixed unhashable instance problem. Closes SF.net tracker
+	#1726918
+	
+	* src/images.py: added support for BMP and Tiff images. Thanks to suggestion
+	from Alex Lau.
+	
+2007-05-25  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py: support for multiple versions
+	* src/images.py: support for multiple versions
+	* src/dbobjects.py: support for multiple versions
+	* src/pennave.xsl: support for multiple versions
+	
+2007-05-23  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	
+	* src/pennave.py: version bump to 0.5svn
+	
+	* *: lots of changes for 0.4 release
+	
+2007-05-22  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* static/css/pennave.css: improvements on powered by pennave
+	* static/xslt/pennave.xsl; improvements on powered by pennave
+	
+	* src/images.py: if the actual images can't be found, but a thumbnail is still
+	present, the thumbnail for the image will be shown. This can cause a bit of
+	misbehavior, but is less obnoxious than the giant error messages.
+	
+	* static/xslt/pennave.xsl: cleaned up code, added ability to remove tags
+	* static/css/pennave.css: restyled some elements
+	
+	* src/pennave.py: fixed a problem with hiddenTags
+	
+	* static/css/pennave.css: fixed a small color issue
+	
+	* src/default.conf: cleaned up configuration and updated
+	* src/pennave.py: allow specification of database location and clean up
+	launching code
+	* static/js/tagSelection.js: last bit of javascript nav code is nuked
+	* statix/xslt/pennave.xsl: nuke last bit of javascript nav code
+	
+	* COPYING: added new license for LiberationSans-Regular.ttf
+	* src/LiberationSans-Regular.ttf: font is now included with distribution
+	
+	* src/pennave.py: fix bug that prevented from rendering stylesheet
+	
+	* static/css/pennave.css: created div.photoThumbnailHighlight for use when
+	photos are highlighted
+	* static/js/tagSelection.js: cleaned up code some more. Highlighting photos by
+	hovering over tags now works properly.
+
+	* static/css/pennave.css: various CSS changes and fixes to make it look prettier
+	* static/js/tagSelection.js: removed unneeded SelectTag function
+	* static/xslt/pennave.xsl: updated the default style a bit more
+	
+	* static/js/tagSelections.js: remove the viewNext javascript function. This
+	function can be recreated easier in XSLT anyway.
+	* static/xslt/pennave.xsl: modified pageFlicker to remove the old javascript
+	call to viewNext.
+	* src/pennave.py: while viewing the tags, creates a new node called hookArgs
+	with children called arg to represent all of the values on the hook. Hopefully,
+	this helps eliminate some of the reliance on javascript for more critical
+	functions.
+
+	* src/images.py: patch from Alexander Skwar to fix issues with filenames that
+	are too long. The thumbnails are now stored as the md5 of their previous
+	filenames to avoid issues with filesystems that have a maximum number of
+	characters in filenames.
+	
+	* static/js/canvas.js: silently fail if it can't find the div element
+	
+	* src/pennave.py: configuration file cleanup, number of photos for canvas is no
+	longer hardcoded
+	* static/js/canvas.js: now a little object oriented. Also, allows jitter for the
+	images on the canvas to show a bit more. All configuration parameters at the top.
+	* src/feeds.py: cleaned up configuration issues
+	
+2007-05-21  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py: converted print logging to cherrypy.log
+	* src/images.py: converted print logging to cherrypy.log
+	* src/pennave.py: properly mount trees for CherryPy 3.0
+	* static/xslt/pennave.xsl: fix some trailing / issues
+	* static/js/tagSelection.js: fix some trailing / issues
+	
+2007-05-20  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py: updated for CherryPy 3.0
+	* src/exiftools.py: updated for CherryPy 3.0
+	* src/pennave.conf: apparently CherryPy 3.0 needs two config files
+	
+2007-05-11  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* static/xslt/pennave.xsl: remove need for selectTags as suggested
+	by Alexander Skwar.
+
+2007-02-04  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* static/xslt/pennave.xsl: show alt text for images, bug #1651528
+
+	* src/pennave.py: prevent leakage of tag names, fixes bug #1651525
+	* src/feeds.py: prevent leakage of tag names, fixes bug #1651525
+
+2007-02-03  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/feeds.py (rss): fixed problem where RSS feeds would not
+	indicate what tags they included
+	* static/xsl/pennave.xsl: accidentally forget RSS links
+
+	* src/pennave.py: replaced the nice and slick XML method to
+	generate static welcome page with a hackneyed HTML method.  The
+	reason for this is because if we generated the HTML from XML there
+	were errors in the script tag and nothing would be rendered in
+	IE.  ACK!  This way people can use broken HTML all they want.
+	* static/xml: removed replaced with html
+	* static/html: new directories for HTML output
+	
+2007-01-29  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* static/js/tagSelection.js: fixed error when returning to browse mode
+	with no tags selected.
+	* static/xslt/pennave.xsl: added in side padding to make target area
+	larger
+
+	* src/pennave.py: added code for internal XSLT rendering
+	* src/hedgehog.conf: example configurations for internal XSLT rendering
+	* static/css/pennave.css: pushed new CSS File
+	* static/css/pennave2.css: removed old CSS file
+	* static/xslt/pennave.xsl: modifications to make it work better on IE
+
+2007-01-27  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py: new info for centering images
+	* src/default.conf: update size to the right sizes
+	* static/css/pennave2.css: improved elements
+	* static/xslt/pennave.xsl: changes for centering
+
+2007-01-26  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py (getFilename): moved stuff around to improve
+	James Shoemaker's patch
+	* static/css/pennave2.css: more changes for viewing
+	* static/xslt/pennave.xsl: more changes for single image viewing
+
+	* static/xslt/pennave.xsl: first stab at creating the new
+	interface to view a single picture
+	* static/xslt/pennave2.css: temporary file for new CSS design
+	* src/images.py: provided for consistent creation of error images
+	* src/pennave.py (photoToXml): no longer show required tags
+
+	* src/pennave.py, src/dbobjects.py: merge in changes by James Shoemaker
+	* static/xslt/pennave.xsl: changes for the new layouts
+	* static/js/tagSelections.js: changes for the new layouts
+
+2007-01-01  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py (newDoc): put all documents into the pennave
+	namespace.  This change now must be reflected through the XSLT
+	style sheets.  This is a MAJOR change. 
+	(tags): renamed tagcloud to tagBrowse
+
+2006-11-09  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py: add support for not showing all the tags
+	* src/exiftools.py: remove superflous printing
+	* static/xml/patrick.xml: revert back to working firefox stuff
+	* static/css/pennave.css: add support for not showing all the tags
+	* static/xslt/pennave.xsl: add support for not showing all the tags
+	* static/js/tagSelections.js: add support for not showing all the tags
+
+2006-11-01  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py: wrap all libxml2.newProp arguments in
+	codecs.encode to make sure we're safe
+	* src/slides.py: ditto
+	* src/feeds.py: ditto
+	* static/xml/welcome.xml: fixes from Alexander Skwar
+	* static/css/welcome.css: new file
+
+2006-10-30  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py, src/slides.py, src/feeds.py: added
+	codecs.encode(str,"UTF-8") when creating new XML nodes.
+	This should keep libxml from dying.
+	* src/dbobjects.py: changed StringCol elements to UnicodeCol
+	elements.  Should work better for international characters.
+
+2006-10-29  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* static/js/slides.js: fixed some zindex issues
+
+	* README: new file that will go with releases
+	* TODO: removed some finished items, added some other items
+
+	* src/images.py (getThumbnail): added code to look at exif
+	information in files and rotate those files accordingly.
+
+	* src/pennave.py (newDoc): new function to create documents and
+	assign them to a namespace.  (photoToXml): comply with changes
+	made in EXIF processing.
+	* src/exiftools.py: now uses the EXIF processing library
+	* static/xslt/pennave.xsl: changes for new EXIF namespace
+	
+
+2006-10-26  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/images.py: fixed bug where a 500 error would be returned if
+	the file could not be found.  In reality it should be a 404, right
+	now it's an error PNG.
+
+	* src/EXIF.py: added new file
+	* src/pennave.py: removed exif data
+	* src/exiftools.py: new file
+	* COPYING: updated to reflect license of src/EXIF.py
+
+2006-10-25  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py: cleaned up some of the exif issues.  Getting ready
+	to move stuff to a better exif implementation.
+
+2006-10-24  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/pennave.py: fixed boneheaded error where Image was not being
+	imported, so exif extraction failed.  Also fixed error with UTF8 tags
+	crashing the output.  Whoops.
+
+2006-10-23  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/images.py: fixed error where stacked images crash when no
+	images are found in the set.  Now returns a dummy image instead.
+
+2006-08-25  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+	* src/images.py (getThumbnail): fixed an error with uppercase files
+
+	* src/pennave.py (setOrder): new method to reverse order,
+	(getPhotos): honors the reverse order session variable
+	* static/xslt/pennave.xsl: added support for reversing order
+
+2006-08-22  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py (buildStaticWelcome): new support for canvases in
+	addition to the standard images.  You'll need to include canvas.js
+	now.
+	* static/js/canvas.js: new file to provide support for canvases
+
+2006-08-16  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py (PennAveWeb): added validateSince and
+	setLastModified functions
+	* src/images.py: modifications to allow handling of Last-Modified
+	on images so they don't always need to be resent -- saving lots of
+	bandwidth.
+
+2006-08-11  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py (PennAveWeb.getVersion): new function to return
+	version of PennAve running
+	* src/feeds.py: yeah, 0.3 had it broken.  D'oh.
+
+	* NEWS: new file
+	* branches,tags,trunk: new files for SVN
+	* doc/*: new documentation
+	* INSTALL, NEWS, makedist.sh: preparation for 0.3 release
+
+	* src/pennave.py (checkStaticWelcome): new function the check if
+	the static welcome page has been update.  If it is has, then
+	reread the document.  This is done at request time.
+	* src/pennave.py: removed old login cruft - no longer needed
+
+2006-08-10  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* static/js/tagSelections.js (selectTag): fixed javascript regex
+	to better support selecting tags when multiple mode is on
+
+	* src/pennave.py (buildStaticWelcome): code for processing and
+	displaying the static welcome file.  This replaces the old method
+	that overloaded people with huge amounts of tags before.
+	* static/xml/welcome.xml: default welcome file
+	* src/images.py (stacked): fixed filename problems
+
+	* src/pennave.py: added support for stackedPath configuration parameter
+	* src/images.py: added ability to generate stacked image for gallerys
+	and stuff.  Also added the regenKey param, which can be set in the
+	configuration file.  Be careful, however.  If you're using Mozilla,
+	you'll not see the proper image thanks to firefox bug 304574.
+
+	* src/images.py: new file for PennAveImages
+	* src/slides.py: new file for PennAveSlides
+	* src/feeds.py: new file for PennAveFeeds
+	* src/pennave.py: broke out Images, Slides, Feeds to new files
+
+	* src/pennave.py (getTags): preliminary logic for doing OR
+	operations on tags using the + operator.
+
+	* src/imageops.py: new file that provides some fancier image
+	operations such as compositing images together
+
+2006-07-24  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py (PennAveFeeds): new module that provides RSS
+	feeds of the newest photos in a stream
+	* static/xslt/pennave.xsl: now places in the link to the RSS feeds
+	when browsing category views
+	* src/default.conf: sample fields for the Feeds stuff
+
+	* static/xslt/pennave.xsl: removed one dead template and updated
+	it so it says "1 photo" instead of "1 photos"
+
+	* src/pennave.py (getPhotos, getTags): query optimizaton and
+	profiling
+
+2006-07-22  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* src/pennave.py: fixed code for hidden images
+	* static/css/slides.css: updated CSS stuff
+	* static/js/slides.js: fixed some bugs with FireFox 1.0, still not
+	perfect
+
+2006-07-20  Patrick Wagstrom  <pwagstro@andrew.cmu.edu>
+
+	* static/js/slides.js: disallow firefox 1.0 because of problems
+	with image.onload handlers
+
+	* static/js/slides.js: fixes for IE
+	* static/css/slides.css: fixes for IE
+	* static/js/tagSelections.js: fixes for IE
+
+	* src/pennave.py (getNextPhoto): no longer reads the image file to
+	get the dimensions - now done in javascript
+	* static/js/slides.js: image size now properly computed in
+	javascript, show waits until images are loaded before proceeding
+
+2006-07-19  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* static/xslt/pennave.xsl: support for slideshows
+	* src/pennave.py: slideshow support
+	* static/xslt/slides.xsl: slideshow support
+	* static/js/slides.js: slideshow support
+	* static/css/slides.css: slideshow support
+	* static/js/tagSelections.js: slideshow support
+
+2006-07-17  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* static/xslt/pennave.xsl: fixed bold facing of description
+	keyword on photos.
+
+	* static/css/pennave.css: rendering fixes for IE
+	* static/xslt/pennave.css: rendering fixes for IE
+
+2006-07-16  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* INSTALL: updated
+	* makedist.sh: new file to make distribution
+	* resources: removed, old pennave
+	* README: removed, old pennave
+
+2006-07-14  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* static/xslt/pennave.xsl: added page counter selector thing
+	* static/css/pennave.css: added CSS for page counter/selector thing
+
+2006-07-13  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* src/pennave.py: added support for different prefixes and proxying
+	* static/xslt/pennave.xsl: added support for different prefixes
+	and proxying
+	* INSTALL: new file
+	* TODO: updated to reflect new nature of PennAve
+
+	* pennave.py: removed
+	* pennave/*: premove
+
+	* src/pennave.py: no crash on exif error, put number of images
+	per page in tag view
+	* static/xslt/pennave.xsl: updated for per page links
+
+	* static/xslt/pennave.xsl: updated previous and next links
+	* static/css/pennave.css: updated previous and next links
+	* src/pennave.py: made index redirect to /tags
+
+2006-07-13  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* src/pennave.py: added ability to specify required tags in
+	defaults.conf file.  added exif tag output
+	* static/xslt/pennave.xsl: exif tag output
+	* static/css/pennave.css: exif tag output
+	* static/js/tagSelection.js: fixed a few bugs with URL rewrites
+
+2006-07-13  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* src/pennave.py: now possible to view a set of photos
+
+2006-07-12  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* src/pennave.py: incredible changes to make it functional
+	* static/*: lots of fun changes
+
+2006-07-12  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* pennave/src/pennave.py: new file, cherrypy based
+	* pennave/src/dbobjects.py: new file, sqlobject based
+
+2004-08-17  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* pennave/request.py (Request.validUser): Added first bits of code
+	to check if the user is a valid user.
+
+2004-08-06  Patrick Wagstrom  <wagspat@iit.edu>
+
+	* pennave/info.py (PictureInfo._xmlNode): Fixed a bug with null
+	characters in EXIF tags.
+
+2004-08-04  Patrick Wagstrom  <wagspat@iit.edu>
+
+	* pennave/info.py (PictureInfo._xmlNode): added a hack to allow
+	for a back link on pictures.  Also fixed the EXIF tag handler so
+	it doesn't print out an empty gal:exifTags node if there are no
+	EXIF tags to handle.
+
+2004-08-03  Patrick Wagstrom  <wagspat@iit.edu>
+
+	* pennave/info.py (PictureInfo.__init__): fixed problem with
+	thumbnails outputting an incorrect size.  This is not the proper
+	solution as I just made them not output any size.
+
+2004-06-18  Patrick Wagstrom  <wagspat@iit.edu>
+
+	* resources/xslt/viewDirectory.xsl: fixed automatic path linking
+	on the view directory page.  Now it's possible to navigate around
+	in the directory tree.
+
+2004-06-15  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* gallery.py: removed the need to build up ACTION_DICT each time.
+	Instead it finds the function by doing a search in the dir() if
+	the object exists.  This should speed up performance and make
+	expansion easier than having to also modify the configuration files.
+
+2004-06-14  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* resources/xslt/viewDirectory.xsl: added a new variable called
+	picturesInRow.  By default, this is read from the attribute
+	gal:columns in the gal:images element.  Otherwise, it defaults to
+	4 if not set.  This is used to build the tables for the display of elements.
+
+2004-06-07  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* pennave/info.py (PictureInfo._xmlNode): changed code so sources
+	must be SourceInfo objects
+	(SourceInfo): cleaned up the class, added ability to convert
+	itself into an XML node 
+
+2004-06-05  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* gallery.py (action_view): made gal:width and gal:height
+	parameters on output source actually be accurate
+
+	* resources/xslt/viewFile.xsl: made image display read the
+	gal:width and gal:height parameters
+
+	* pennave/picture.py (Picture.getScaledSize): added ability to get
+	the scaled size of a picture without actually scaling the picture
+
+2004-06-04  Patrick Wagstrom  <pridkett@users.sourceforge.net>
+
+	* gallery.py (action_dir): added functionality so output is XML
+	instead of HTML
+
