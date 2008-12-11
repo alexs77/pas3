@@ -1,0 +1,235 @@
+/*
+ * $LastChangedDate$
+ * $LastChangedRevision$
+ * $LastChangedBy$
+ * $HeadURL$
+ * $Id$
+ */
+
+/*
+ * color for use in PennAve
+ *
+ */
+body {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-family: sans;
+    background-color: #f7f7f7;
+}
+
+div.rootTags {
+	position: relative;
+	top: 0px;
+    font-size: 80%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    background-color: black;
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2px;
+    border-bottom: 2px solid gray;
+}
+
+div.rootTags a, div.rootTags a:visited, div.rootTags a:hover, div.rootTags a:active {
+	color: #aaaaee;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+	line-height: 0.2ex;
+}
+div.rootTags a:hover {
+	border-bottom: 1px solid;
+}
+div.rootTags span.removeTagLink {
+	font-size: 80%;
+}
+
+div.pageFlicker {
+    font-size: 80%;
+    padding: 1px;
+    width: 99%;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+div.pennAveFooter {
+	position: absolute;
+	right: 1px;
+	top: 1px;
+}
+
+
+body.photoView table {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/****
+ ****  customizing information on the sidebar
+ ****/
+
+div.sidebar {
+  clear:left;
+  float:left;
+  width:23%;
+  margin-left:5px;
+  line-height:1.3em;
+}
+
+div.photoInfo {
+    display: none;
+    border: 1px solid black;
+    font-size: 80%;
+}
+
+span.photoInfoField {
+    display: block;
+    font-weight: bold;
+}
+
+span.photoInfoData {
+    font-weight: normal;
+}
+
+
+
+/*
+ * displaying the tag cloud
+ */
+
+div.tagCloud {
+    border: 1px solid black;
+    background-color: #ffccff;
+    display: block;
+    font-size: 80%;
+    margin-bottom: 1ex;
+}
+
+.tagCloud a {
+    text-decoration: none;
+}
+
+.tagCloud a:hover {
+    text-decoration: underline;
+}
+
+span.tagCloudTitle, span.tagCloudToggle {
+    background-color: #ccdddd;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}
+
+span.topTags {
+    display: inline;
+}
+
+span.nonTopTags {
+    display: none;
+}
+
+span.tagCloudHasChildren {
+    display: none;
+}
+
+span.tagCloudTip {
+    display: none;
+}
+
+span.tagCloudTags {
+    font-size: 80%;
+    display: block;
+    margin: 2px;
+    text-align: justify;
+}
+
+span.tagCloudTags a {
+    text-decoration: none;
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+}
+
+span.tagCloudTags a:hover {
+    text-decoration: none;
+    border-bottom: solid 1px;
+}
+
+span.tagCloudSize1 {
+    font-size: 80%;
+}
+
+span.tagCloudSize2 {
+    font-size: 95%;
+}
+
+span.tagCloudSize3 {
+    font-size: 110%;
+}
+
+span.tagCloudSize4 {
+    font-size: 130%;
+}
+
+span.tagCloudSize5 {
+    font-size: 170%;
+}
+
+span.tagCloudSize6 {
+    font-size: 200%;
+}
+
+
+/****
+ **** showing of photos on the browse page
+ ****/
+
+div.main {
+	position: absolute;
+	left: 25%;
+}
+
+div.photoThumbnailHighlight, div.photoThumbnail {
+    background-color: #ddd;
+    padding: 10px;
+    float: left;
+    margin: 4px;
+    width: 120px;
+    height: 80px;
+    text-align: center;
+    -moz-border-radius: 10px;
+    border: 1px solid #222277;
+}
+
+div.photoThumbnailHighlight, div.photoThumbnail:hover {
+    background-color: #eed;
+    border: 2px solid #c49200;
+    margin: 3px;
+}
+
+/*
+ * showing of photos in the photo view mode
+ */
+
+td.photoFlicker span {
+    font-size: 80%;
+}
+
+td.photoFlicker ul {
+    font-size: 90%;
+    list-style-type: circle;
+    margin: 0px;
+    padding-left: 1.5em;
+}
+
+td.mainPhoto span {
+    width: 644px;
+    display: block;
+}
+
+td.mainPhoto span img {
+    border: 2px solid black;
+}
+
