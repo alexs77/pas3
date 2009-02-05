@@ -251,8 +251,6 @@ def getAllPhotos():
       %s \
       order by a.id" % (processIdsQuery, hiddenQuery)
     
-    # print "query in getAllPhotos: “%s”" % (query)
-    
     return sql.execute(query)
 
 def getAllPhotoVersions():
@@ -281,8 +279,6 @@ def getAllPhotoVersions():
       %s \
       %s \
       order by a.id" % (processIdsQuery, hiddenQuery)
-
-    # print "query in getAllPhotoVersions: “%s”" % (query)
 
     return sql.execute(query)
 
@@ -454,7 +450,13 @@ def start(config=None, dburi=None, dbdebug=False):
         # Alt:
         #fileBaseName = fileName[len(cherrypy.config['img_path_prefix_strip']):]
         # Neu:
-        fileBaseName = urllib.unquote_plus(fileName[len(cherrypy.config['img_path_prefix_strip']):])
+        fileName_unquoted = urllib.unquote_plus(fileName)
+        fileBaseName = None
+        for img_path_prefix_strip in cherrypy.config['img_path_prefix_strip']:
+                if fileName_unquoted.startswith(img_path_prefix_strip):
+                        fileBaseName = fileName_unquoted.split(img_path_prefix_strip)[1]
+        if fileBaseName is None:
+                fileBaseName = fileName_unquoted
         data['images']['original']['url'] = 'http://s3.amazonaws.com/' + urllib.quote(
             codecs.encode('%s/%s/%s' % (
                 cherrypy.config["aws_s3_image_bucket"], cherrypy.config["aws_s3_image_prefix"], fileBaseName
