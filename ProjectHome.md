@@ -1,0 +1,1 @@
+PAS3 is a fork of [PennAve](http://pennave.sf.net), which stores the image files on [Amazon Web Services S3](http://s3.amazonaws.com).
